@@ -1,40 +1,49 @@
-import { Injectable, NotFoundException, BadRequestException  } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { User } from "./interfaces/create.user.interfaces";
 
 @Injectable()
 export class UserService {
-    private User = [
-        {id: 1, name: "Wahad", email: "ahmed.wahad213@gmail.com", password: "123456", role: "admin"},
-        {id: 2, name: "Hussnain", email: "hussnain.baber@gmail.com", password: "12345", role: "User"},
-        {id: 3, name: "Ali", email: "ali.akmal@gmail.com", password: "1234", role: "Event Organization"},
-    ];
-    getAllUsers(){
-        return this.User;
+    private users: User[] = [];
+
+    getAllUsers() {
+        return this.users;
     }
-    getUserById(id: number){
-        const user = this.User.find((User) => User.id === id);
-        if(id <= 0){
+
+    getUserById(id: number) {
+        if (id <= 0) {
             throw new BadRequestException("User id must be greater than 0");
         }
-        if(!user){
+
+        const user = this.users.find((u) => u.id === id);
+
+        if (!user) {
             throw new NotFoundException("User Not Found");
         }
         return user;
     }
-    // Post
-    createUser(data:{name: string, email: string, password: string, role: "user"}){
-     const newUser = {
-         id: Date.now(),
-         ...data,
-         }
-         this.User.push(newUser);
-         return newUser;
+    async createUser(data: Omit<User, 'id'>) {
+        const { email, password } = data;
+
+        const emailExists = this.users.some((user) => user.email === email);
+        if (emailExists) {
+            throw new BadRequestException("User email already exists!!!");
+        }
+        if (password.length < 8) {
+            throw new BadRequestException("User password must be at least 8 characters long");
+        }
+        const newUser: User = {
+            id: Date.now(),
+            ...data,
+        };
+
+        this.users.push(newUser);
+        return newUser;
     }
 
-    //Patch
-    updateUserById(id: number, data:Partial<{ name: string, email: string, password: string }>){
-       const updatedUser = this.getUserById(id);
-           Object.assign(updatedUser, data);
-           return updatedUser;
-    }
+    updateUserById(id: number, data: Partial<Omit<User, 'id'>>) {
+        const userToUpdate = this.getUserById(id);
 
+        Object.assign(userToUpdate, data);
+        return userToUpdate;
+    }
 }
