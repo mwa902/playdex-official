@@ -9,21 +9,27 @@ import { DatabaseService } from './database/database.service';
 import {TypeOrmModule} from "@nestjs/typeorm";
 
 
+
 @Module({
   imports: [UserModule, ConfigModule.forRoot({ isGlobal: true,}),TypeOrmModule.forRoot({
     type: 'postgres',
     url: process.env.DATABASE_URL,
     username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
+    password: String(process.env.DATABASE_PASSWORD),
     autoLoadEntities: true,
     synchronize: true,
   })],
   controllers: [AppController, DatabaseController],
   providers: [AppService, DatabaseService],
 })
+
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    console.log(process.env.DATABASE_USERNAME,typeof process.env.DATABASE_USERNAME),
+        console.log(process.env.DATABASE_PASSWORD)
     consumer.apply(LoginMiddleware).forRoutes("*");
   }
+
+
 }
 
