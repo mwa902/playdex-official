@@ -1,5 +1,10 @@
-import {ArgumentsHost, Catch, ExceptionFilter, HttpException} from '@nestjs/common';
-import { Response, Request} from "express";
+import {
+  ArgumentsHost,
+  Catch,
+  ExceptionFilter,
+  HttpException,
+} from '@nestjs/common';
+import { Response, Request } from 'express';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
@@ -13,6 +18,6 @@ export class HttpExceptionFilter implements ExceptionFilter {
       timestamp: new Date().toISOString(),
       path: request.url,
       message: exception.message,
-    })
+    });
   }
 }

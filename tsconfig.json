@@ -22,11 +22,17 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@app/my-library": [
-        "libs/my-library/src"
+      "@app/common": [
+        "libs/common/src"
       ],
-      "@app/my-library/*": [
-        "libs/my-library/src/*"
+      "@app/common/*": [
+        "libs/common/src/*"
+      ],
+      "@app/database": [
+        "libs/database/src"
+      ],
+      "@app/database/*": [
+        "libs/database/src/*"
       ]
     }
   }

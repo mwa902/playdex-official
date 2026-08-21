@@ -1,35 +1,23 @@
-import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import {UserModule} from './user/user.module';
+import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
-import {LoginMiddleware} from "./middlewares/login/login.middleware";
-import { DatabaseController } from './database/database.controller';
-import { DatabaseService } from './database/database.service';
-import {TypeOrmModule} from "@nestjs/typeorm";
-
-
+import { LoginMiddleware } from './middlewares/login/login.middleware';
+import { DatabaseModule } from "@app/database";
 
 @Module({
-  imports: [UserModule, ConfigModule.forRoot({ isGlobal: true,}),TypeOrmModule.forRoot({
-    type: 'postgres',
-    url: process.env.DATABASE_URL,
-    username: process.env.DATABASE_USERNAME,
-    password: String(process.env.DATABASE_PASSWORD),
-    autoLoadEntities: true,
-    synchronize: true,
-  })],
-  controllers: [AppController, DatabaseController],
-  providers: [AppService, DatabaseService],
+  imports: [UserModule, DatabaseModule, ConfigModule.forRoot({ isGlobal: true })],
+  controllers: [AppController],
+  providers: [AppService],
 })
-
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    console.log(process.env.DATABASE_USERNAME,typeof process.env.DATABASE_USERNAME),
-        console.log(process.env.DATABASE_PASSWORD)
-    consumer.apply(LoginMiddleware).forRoutes("*");
+    (console.log(
+      process.env.DATABASE_USERNAME,
+      typeof process.env.DATABASE_USERNAME,
+    ),
+      console.log(process.env.DATABASE_PASSWORD));
+    consumer.apply(LoginMiddleware).forRoutes('*');
   }
-
-
 }
-
