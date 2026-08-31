@@ -1,9 +1,0 @@
-DROP TABLE IF EXISTS roles;
-
-CREATE TABLE roles (
-    id UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
-    role_name VARCHAR(30) UNIQUE NOT NULL DEFAULT 'client',
-    description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)
