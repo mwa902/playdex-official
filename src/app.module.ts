@@ -1,3 +1,4 @@
+// src/app.module.ts
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -12,17 +13,26 @@ import { BookingModule } from './booking/booking.module';
 import { EventTypeModule } from './event_type/event_type.module';
 
 @Module({
-  imports: [UserModule, DatabaseModule, OrganizationModule,VenueModule,ConfigModule.forRoot({ isGlobal: true }), OrganizationModule, EventModule, BookingModule, EventTypeModule,],
+  imports: [
+    UserModule,
+    DatabaseModule,
+    OrganizationModule,
+    VenueModule,
+    ConfigModule.forRoot({ isGlobal: true }),
+    EventModule,
+    BookingModule,
+    EventTypeModule
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    (console.log(
-      process.env.DATABASE_USERNAME,
-      typeof process.env.DATABASE_USERNAME,
-    ),
-      console.log(process.env.DATABASE_PASSWORD));
+    console.log(
+        process.env.DATABASE_USERNAME,
+        typeof process.env.DATABASE_USERNAME,
+    );
+    console.log(process.env.DATABASE_PASSWORD);
     consumer.apply(LoginMiddleware).forRoutes('*');
   }
 }
