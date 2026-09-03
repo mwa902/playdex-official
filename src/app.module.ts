@@ -7,9 +7,12 @@ import { LoginMiddleware } from './middlewares/login/login.middleware';
 import { DatabaseModule } from "@app/database";
 import { OrganizationModule } from './organization/organization.module';
 import { VenueModule } from './venue/venue.module';
+import { EventModule } from './event/event.module';
+import { BookingModule } from './booking/booking.module';
+import { EventTypeModule } from './event_type/event_type.module';
 
 @Module({
-  imports: [UserModule, DatabaseModule, OrganizationModule,VenueModule,ConfigModule.forRoot({ isGlobal: true }), OrganizationModule,],
+  imports: [UserModule, DatabaseModule, OrganizationModule,VenueModule,ConfigModule.forRoot({ isGlobal: true }), OrganizationModule, EventModule, BookingModule, EventTypeModule,],
   controllers: [AppController],
   providers: [AppService],
 })
