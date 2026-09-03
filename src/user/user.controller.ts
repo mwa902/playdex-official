@@ -1,62 +1,53 @@
 import {
-  Body,
   Controller,
-  Get, HttpCode,
+  Get,
+  Post,
+  Put,
+  Delete,
+  Body,
   Param,
-  Patch,
-  Post, Redirect, Req, Res,
-  UseFilters,
-  UseGuards,
+  HttpCode,
+  HttpStatus
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from '../guards/auth/auth.guard';
-import { HttpExceptionFilter } from '../filter/http-exception/http-exception.filter';
+import { User } from './interfaces/create.user.interfaces';
 
-@ApiTags('User service')
-@Controller('user')
-@UseGuards(AuthGuard)
-@UseFilters(HttpExceptionFilter)
+@Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get()
+  @Post('migrate')
+  @HttpCode(HttpStatus.OK)
+  async migrateDatabase() {
+    return this.userService.runUserMigration();
+  }
 
-  getUser( ) {
-    return this.userService.getAllUsers();
+  @Get()
+  async getAllUsers() {
+    return this.userService.findAll();
   }
 
   @Get(':id')
-  getSpecificUser(@Param('id') id: string) {
-    if(id === id)
-    // Fixed: keeping it consistent with string parsing
-    return this.userService.getUserById(Number(id));
+  async getUserById(@Param('id') id: string) {
+    return this.userService.findOne(id);
   }
 
   @Post()
-  create(
-    @Body()
-    body: {
-      name: string;
-      email: string;
-      password: string;
-      role: 'user';
-    },
-  ) {
-    return this.userService.createUser(body);
+  @HttpCode(HttpStatus.CREATED)
+  async createUser(@Body() userData: Partial<User>) {
+    return this.userService.create(userData);
   }
 
-  @Patch(':id')
-  updateUser(
-    @Param('id') id: string, // ✅ FIXED: Removed the accidental colon ":" from inside @Param
-    @Body()
-    body: Partial<{
-      name: string;
-      email: string;
-      password: string;
-      role: 'user';
-    }>,
+  @Put(':id')
+  async updateUser(
+      @Param('id') id: string,
+      @Body() updateData: Partial<User>
   ) {
-    return this.userService.updateUserById(Number(id), body);
+    return this.userService.update(id, updateData);
+  }
+
+  @Delete(':id')
+  async deleteUser(@Param('id') id: string) {
+    return this.userService.remove(id);
   }
 }
