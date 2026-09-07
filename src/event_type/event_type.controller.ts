@@ -38,6 +38,7 @@ export class EventTypeController {
         }
     }
 
+
     @Get()
     async findAll(): Promise<IEventType[]> {
         try {
