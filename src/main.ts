@@ -5,6 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.enableCors({ origin: true, credentials: true });
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -26,8 +27,9 @@ async function bootstrap() {
 
   SwaggerModule.setup('document', app, document);
 
-  await app.listen(process.env.PORT || 3000);
-  console.log(`Server running on port: ${process.env.PORT}`);
+  const port = Number(process.env.PORT || 3000);
+  await app.listen(port);
+  console.log(`Server running on port: ${port}`);
 
   app.enableShutdownHooks();
 }

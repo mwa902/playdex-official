@@ -35,5 +35,7 @@
         "libs/database/src/*"
       ]
     }
-  }
+  },
+  "include": ["src/**/*.ts", "libs/**/*.ts", "test/**/*.ts"],
+  "exclude": ["frontend", "frontend/**/*.ts", "frontend/**/*.tsx", "node_modules"]
 }

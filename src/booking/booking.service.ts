@@ -15,7 +15,7 @@ export class BookingService {
 
     async getMigrationSql(): Promise<string> {
         try {
-            const filePath = path.join(__dirname, '..', 'database', 'migration', 'createbooking.sql');
+            const filePath = path.join(process.cwd(), 'libs', 'database', 'migrations', '06_create_booking.sql');
             const sqlQuery = await fs.readFile(filePath, 'utf8');
 
             if (!sqlQuery || sqlQuery.trim().length === 0) {

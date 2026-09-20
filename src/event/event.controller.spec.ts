@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { EventController } from './event.controller';
+import { EventService } from './event.service';
 
 describe('EventController', () => {
   let controller: EventController;
@@ -7,6 +8,19 @@ describe('EventController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [EventController],
+      providers: [
+        {
+          provide: EventService,
+          useValue: {
+            runEventMigration: jest.fn(),
+            findAll: jest.fn(),
+            findOne: jest.fn(),
+            create: jest.fn(),
+            update: jest.fn(),
+            remove: jest.fn(),
+          },
+        },
+      ],
     }).compile();
 
     controller = module.get<EventController>(EventController);

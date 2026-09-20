@@ -15,7 +15,7 @@ export class EventService {
 
     async getMigrationSql(): Promise<string> {
         try {
-            const filePath = path.join(__dirname, '..', 'database', 'migration', 'createevent.sql');
+            const filePath = path.join(process.cwd(), 'libs', 'database', 'migrations', '05_create_events.sql');
             const sqlQuery = await fs.readFile(filePath, 'utf8');
 
             if (!sqlQuery) {

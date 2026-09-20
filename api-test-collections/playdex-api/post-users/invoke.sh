@@ -1,0 +1,1 @@
+curl -sS -D - -o /tmp/playdex-users-create.out -X POST http://localhost:3000/users -H "Content-Type: application/json" -d @"$(dirname "$0")/sample-data.json" && echo "--- body ---" && cat /tmp/playdex-users-create.out

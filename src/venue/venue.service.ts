@@ -15,7 +15,7 @@ export class VenueService {
 
     async getMigrationSql(): Promise<string> {
         try {
-            const filePath = path.join(__dirname, '..', 'database', 'migration', 'create.venue.sql');
+            const filePath = path.join(process.cwd(), 'libs', 'database', 'migrations', '03_create_venue.sql');
             const sqlQuery = await fs.readFile(filePath, 'utf8');
 
             if (!sqlQuery) {

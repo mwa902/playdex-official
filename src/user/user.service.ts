@@ -14,7 +14,7 @@ export class UserService {
 
   async getMigrationSql(): Promise<string> {
     try {
-      const filePath = path.join(__dirname, '..', 'database', 'migration', 'createuser.sql');
+      const filePath = path.join(process.cwd(), 'libs', 'database', 'migrations', '01_create_users.sql');
       const sqlQuery = await fs.readFile(filePath, 'utf8');
 
       if (!sqlQuery) {

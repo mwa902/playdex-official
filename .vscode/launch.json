@@ -1,0 +1,39 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Playdex API (debug)",
+      "type": "node",
+      "request": "attach",
+      "address": "localhost",
+      "port": 9229,
+      "restart": true,
+      "outFiles": [
+        "${workspaceFolder}/dist/**/*.js"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "preLaunchTask": "playdex-api: nest start debug"
+    },
+    {
+      "name": "Playdex Operations Console (debug)",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "url": "http://localhost:3001",
+      "webRoot": "${workspaceFolder}/frontend",
+      "preLaunchTask": "playdex-operations-console: next dev"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Debug All Services",
+      "configurations": [
+        "Playdex API (debug)",
+        "Playdex Operations Console (debug)"
+      ],
+      "preLaunchTask": "playdex-services: start all",
+      "stopAll": true
+    }
+  ]
+}

@@ -14,7 +14,7 @@ export class OrganizationService {
 
     async getMigrationSql(): Promise<string> {
         try {
-            const filePath = path.join(__dirname, '..', 'database', 'migration', '02_create_organization.sql');
+            const filePath = path.join(process.cwd(), 'libs', 'database', 'migrations', '02_create_organization.sql');
             const sqlQuery = await fs.readFile(filePath, 'utf8');
 
             if (!sqlQuery) {
