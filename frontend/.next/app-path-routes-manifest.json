@@ -1,13 +1,13 @@
 {
   "/_not-found/page": "/_not-found",
+  "/(marketing)/page": "/",
+  "/(dashboard)/organizations/page": "/organizations",
   "/(dashboard)/event-types/page": "/event-types",
   "/(dashboard)/venues/page": "/venues",
-  "/(marketing)/page": "/",
-  "/(dashboard)/bookings/page": "/bookings",
-  "/(dashboard)/events/[id]/page": "/events/[id]",
-  "/(dashboard)/dashboard/page": "/dashboard",
   "/(auth)/login/page": "/login",
-  "/(dashboard)/organizations/page": "/organizations",
+  "/(dashboard)/users/page": "/users",
+  "/(dashboard)/bookings/page": "/bookings",
   "/(dashboard)/events/page": "/events",
-  "/(dashboard)/users/page": "/users"
+  "/(dashboard)/events/[id]/page": "/events/[id]",
+  "/(dashboard)/dashboard/page": "/dashboard"
 }
