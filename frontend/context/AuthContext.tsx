@@ -24,18 +24,28 @@ const AuthContext = createContext<AuthContextValue | null>(null);
 
 const SESSION_KEY = 'playdex_user';
 
+function safeGetStorage(key: string): string | null {
+  try { return localStorage.getItem(key); } catch { return null; }
+}
+function safeSetStorage(key: string, value: string): void {
+  try { localStorage.setItem(key, value); } catch { /* noop */ }
+}
+function safeRemoveStorage(key: string): void {
+  try { localStorage.removeItem(key); } catch { /* noop */ }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser]       = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Restore session from localStorage on mount
+  // Restore session — only runs on client after hydration
   useEffect(() => {
     try {
-      const stored = localStorage.getItem(SESSION_KEY);
+      const stored = safeGetStorage(SESSION_KEY);
       if (stored) setUser(JSON.parse(stored) as User);
     } catch {
-      // corrupted storage — ignore
+      safeRemoveStorage(SESSION_KEY);
     } finally {
       setLoading(false);
     }
@@ -44,19 +54,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = useCallback(async (email: string, password: string) => {
     const u = await api.loginUser(email, password);
     setUser(u);
-    localStorage.setItem(SESSION_KEY, JSON.stringify(u));
+    safeSetStorage(SESSION_KEY, JSON.stringify(u));
     router.push('/dashboard');
   }, [router]);
 
   const logout = useCallback(() => {
     setUser(null);
-    localStorage.removeItem(SESSION_KEY);
+    safeRemoveStorage(SESSION_KEY);
     router.push('/login');
   }, [router]);
 
   const isSuperAdmin = user?.role === 'superadmin';
   const isAdmin      = user?.role === 'admin' || user?.role === 'superadmin';
-  const hasRole      = (role: UserRole) => user?.role === role;
+  const hasRole      = useCallback((role: UserRole) => user?.role === role, [user]);
 
   return (
     <AuthContext.Provider value={{ user, loading, login, logout, isSuperAdmin, isAdmin, hasRole }}>

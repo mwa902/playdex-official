@@ -1,12 +1,12 @@
 import type { NextConfig } from 'next';
-import path from 'path';
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: false },
-  // Silence the monorepo lockfile warning
-  outputFileTracingRoot: path.join(__dirname, '../'),
+  // Tell Next.js this is a sub-folder in a monorepo so it doesn't
+  // complain about multiple lockfiles (no __dirname needed)
+  outputFileTracingRoot: process.cwd().replace(/[\\/]frontend$/, ''),
 };
 
 export default nextConfig;

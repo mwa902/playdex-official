@@ -132,18 +132,21 @@ export interface CreateUserDto {
 }
 
 // ─── HTTP kernel ─────────────────────────────────────────────────────────────
-const BASE = (process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:3000').replace(/\/$/, '');
+// NEXT_PUBLIC_API_BASE_URL must be set in Vercel env vars to your deployed backend URL.
+// Falls back to localhost:5000 for local development only.
+const BASE = (process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:5000').replace(/\/$/, '');
 
 async function req<T>(path: string, options: RequestInit = {}): Promise<T> {
   let res: Response;
   try {
     res = await fetch(`${BASE}${path}`, {
       ...options,
-      credentials: 'include',
+      // Only send credentials for same-origin; cross-origin (Vercel→API) uses omit
+      credentials: BASE.includes('localhost') ? 'include' : 'omit',
       headers: { 'Content-Type': 'application/json', ...(options.headers ?? {}) },
     });
   } catch (err) {
-    throw new ApiError(0, 'Network error — is the backend running?', err);
+    throw new ApiError(0, 'Network error — backend unreachable', err);
   }
 
   if (!res.ok) {
