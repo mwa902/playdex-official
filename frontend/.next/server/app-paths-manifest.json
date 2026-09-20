@@ -1,13 +1,13 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/(dashboard)/bookings/page": "app/(dashboard)/bookings/page.js",
-  "/(dashboard)/dashboard/page": "app/(dashboard)/dashboard/page.js",
-  "/(marketing)/page": "app/(marketing)/page.js",
-  "/(dashboard)/events/page": "app/(dashboard)/events/page.js",
-  "/(auth)/login/page": "app/(auth)/login/page.js",
-  "/(dashboard)/events/[id]/page": "app/(dashboard)/events/[id]/page.js",
-  "/(dashboard)/users/page": "app/(dashboard)/users/page.js",
   "/(dashboard)/event-types/page": "app/(dashboard)/event-types/page.js",
   "/(dashboard)/venues/page": "app/(dashboard)/venues/page.js",
-  "/(dashboard)/organizations/page": "app/(dashboard)/organizations/page.js"
+  "/(marketing)/page": "app/(marketing)/page.js",
+  "/(dashboard)/bookings/page": "app/(dashboard)/bookings/page.js",
+  "/(dashboard)/events/[id]/page": "app/(dashboard)/events/[id]/page.js",
+  "/(dashboard)/dashboard/page": "app/(dashboard)/dashboard/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(dashboard)/organizations/page": "app/(dashboard)/organizations/page.js",
+  "/(dashboard)/events/page": "app/(dashboard)/events/page.js",
+  "/(dashboard)/users/page": "app/(dashboard)/users/page.js"
 }
