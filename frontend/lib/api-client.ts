@@ -158,44 +158,29 @@ async function req<T>(path: string, options: RequestInit = {}): Promise<T> {
 
 // ─── API surface ─────────────────────────────────────────────────────────────
 export const api = {
-  // Auth — match email+password against /users list.
-  // Falls back to local demo accounts so the UI works for demos
-  // even without a seeded backend.
+  // Auth — calls POST /users/login on the server
+  // Falls back to local demo accounts when server is unreachable (offline demo mode)
   loginUser: async (email: string, password: string): Promise<User> => {
-    // Local demo fallback (used when backend has no seeded data)
-    const DEMO_USERS: (User & { password: string })[] = [
-      {
-        id: 'demo-superadmin-1',
-        name: 'Super Admin',
-        email: 'superadmin@playdex.io',
-        password: 'SuperAdmin@2024',
-        role: 'superadmin',
-        is_active: 'Active',
-      },
-      {
-        id: 'demo-admin-1',
-        name: 'Platform Admin',
-        email: 'admin@playdex.io',
-        password: 'Admin@2024',
-        role: 'admin',
-        is_active: 'Active',
-      },
+    const DEMO_USERS: User[] = [
+      { id: 'demo-superadmin-1', name: 'Super Admin',    email: 'superadmin@playdex.io', role: 'superadmin', is_active: 'Active' },
+      { id: 'demo-admin-1',      name: 'Platform Admin', email: 'admin@playdex.io',       role: 'admin',      is_active: 'Active' },
     ];
+    const DEMO_PASSWORDS: Record<string, string> = {
+      'superadmin@playdex.io': 'SuperAdmin@2024',
+      'admin@playdex.io':      'Admin@2024',
+    };
 
     try {
-      const users = await req<(User & { password?: string })[]>('/users');
-      const u = users.find(x => x.email === email && x.password === password);
-      if (!u) throw new ApiError(401, 'Unauthorized', { message: 'Invalid email or password.' });
-      return u as User;
+      return await req<User>('/users/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      });
     } catch (err) {
-      // If backend is unreachable (network error) try demo accounts
+      // Backend unreachable → fall back to local demo credentials
       if (err instanceof ApiError && err.status === 0) {
-        const demo = DEMO_USERS.find(x => x.email === email && x.password === password);
-        if (demo) {
-          const { password: _p, ...user } = demo;
-          return user as User;
-        }
-        throw new ApiError(0, 'Network error', { message: 'Cannot reach the backend. Is it running on port 3000?' });
+        const demo = DEMO_USERS.find(u => u.email === email);
+        if (demo && DEMO_PASSWORDS[email] === password) return demo;
+        throw new ApiError(401, 'Unauthorized', { message: 'Invalid email or password.' });
       }
       throw err;
     }
