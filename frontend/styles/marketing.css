@@ -208,3 +208,58 @@
   .hero { padding: 70px 0 60px; }
   .hero-actions { flex-direction: column; }
 }
+
+/* ────────────────────────────────────────────────────────
+   SPORT TILES
+──────────────────────────────────────────────────────── */
+.sport-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 22px 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  text-align: center;
+  cursor: default;
+  transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+}
+.sport-tile:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+}
+.sport-tile-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+  transition: background var(--transition);
+}
+.sport-tile:hover .sport-tile-icon {
+  background: var(--color-primary-light);
+}
+.sport-tile-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -.01em;
+}
+.sport-tile-sub {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* dark mode tile */
+[data-theme="dark"] .sport-tile { background: var(--color-surface); border-color: var(--color-border); }
+[data-theme="dark"] .sport-tile:hover { border-color: var(--color-primary); }
+[data-theme="dark"] .sport-tile-icon { background: var(--color-surface-raised); }
+
+/* Benefits strip responsive */
+@media (max-width: 900px) {
+  .sport-benefits-grid { grid-template-columns: 1fr !important; }
+}

@@ -158,15 +158,48 @@ async function req<T>(path: string, options: RequestInit = {}): Promise<T> {
 
 // ─── API surface ─────────────────────────────────────────────────────────────
 export const api = {
-  // Auth (handled via cookie-session on backend; backend exposes /users)
-  // We simulate login by finding user by email+password from /users list
-  loginUser: (email: string, password: string) =>
-    req<User[]>('/users').then(users => {
-      const u = (users as (User & { password?: string })[])
-        .find(x => x.email === email && (x as { password?: string }).password === password);
+  // Auth — match email+password against /users list.
+  // Falls back to local demo accounts so the UI works for demos
+  // even without a seeded backend.
+  loginUser: async (email: string, password: string): Promise<User> => {
+    // Local demo fallback (used when backend has no seeded data)
+    const DEMO_USERS: (User & { password: string })[] = [
+      {
+        id: 'demo-superadmin-1',
+        name: 'Super Admin',
+        email: 'superadmin@playdex.io',
+        password: 'SuperAdmin@2024',
+        role: 'superadmin',
+        is_active: 'Active',
+      },
+      {
+        id: 'demo-admin-1',
+        name: 'Platform Admin',
+        email: 'admin@playdex.io',
+        password: 'Admin@2024',
+        role: 'admin',
+        is_active: 'Active',
+      },
+    ];
+
+    try {
+      const users = await req<(User & { password?: string })[]>('/users');
+      const u = users.find(x => x.email === email && x.password === password);
       if (!u) throw new ApiError(401, 'Unauthorized', { message: 'Invalid email or password.' });
       return u as User;
-    }),
+    } catch (err) {
+      // If backend is unreachable (network error) try demo accounts
+      if (err instanceof ApiError && err.status === 0) {
+        const demo = DEMO_USERS.find(x => x.email === email && x.password === password);
+        if (demo) {
+          const { password: _p, ...user } = demo;
+          return user as User;
+        }
+        throw new ApiError(0, 'Network error', { message: 'Cannot reach the backend. Is it running on port 3000?' });
+      }
+      throw err;
+    }
+  },
 
   // Users
   listUsers:   () => req<User[]>('/users'),

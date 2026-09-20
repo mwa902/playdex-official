@@ -793,13 +793,28 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.2; font-weight: 700; letter-spacing: -0.02em;
   top: 0;
   z-index: 30;
   gap: 16px;
+  transition: background var(--transition), border-color var(--transition);
 }
 .dash-topbar-title {
   font-size: 16px;
   font-weight: 700;
   color: var(--color-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-.dash-topbar-actions { display: flex; align-items: center; gap: 10px; }
+/* Center column — dark toggle sits exactly in the middle */
+.dash-topbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.dash-topbar-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
 
 .dash-content {
   flex: 1 1;
@@ -959,6 +974,42 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.2; font-weight: 700; letter-spacing: -0.02em;
 @media (max-width: 420px) {
   .metrics-grid { grid-template-columns: 1fr; }
 }
+
+/* ────────────────────────────────────────────────────────
+   DARK MODE SURFACE OVERRIDES
+──────────────────────────────────────────────────────── */
+[data-theme="dark"] body                { background: var(--color-bg); color: var(--color-text); }
+[data-theme="dark"] .dash-topbar        { background: var(--color-surface); border-color: var(--color-border); }
+[data-theme="dark"] .card               { background: var(--color-surface); border-color: var(--color-border); }
+[data-theme="dark"] .card-footer        { background: var(--color-surface-raised); border-color: var(--color-border); }
+[data-theme="dark"] .table th           { background: var(--color-surface-raised); color: var(--color-text-muted); }
+[data-theme="dark"] .table td           { border-color: var(--color-border); color: var(--color-text); }
+[data-theme="dark"] .table tbody tr:hover td { background: var(--color-surface-raised); }
+[data-theme="dark"] .modal              { background: var(--color-surface); }
+[data-theme="dark"] .modal-footer       { background: var(--color-surface-raised); border-color: var(--color-border); }
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-textarea      { background: var(--color-surface-raised); border-color: var(--color-border); color: var(--color-text); }
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .form-select:focus,
+[data-theme="dark"] .form-textarea:focus { border-color: var(--color-primary); box-shadow: 0 0 0 3px rgba(56,169,201,.15); }
+[data-theme="dark"] .btn-secondary      { background: var(--color-surface-raised); border-color: var(--color-border-strong); color: var(--color-text); }
+[data-theme="dark"] .btn-secondary:hover:not(:disabled) { background: var(--color-surface-hover); }
+[data-theme="dark"] .btn-ghost:hover:not(:disabled)     { background: var(--color-primary-light); color: var(--color-primary); }
+[data-theme="dark"] .alert-error   { background: var(--color-error-bg);   color: #fca5a5; border-color: rgba(220,38,38,.3); }
+[data-theme="dark"] .alert-success { background: var(--color-success-bg); color: #86efac; border-color: rgba(22,163,74,.3); }
+[data-theme="dark"] .alert-warning { background: var(--color-warning-bg); color: #fcd34d; border-color: rgba(217,119,6,.3); }
+[data-theme="dark"] .alert-info    { background: var(--color-info-bg);    color: #93c5fd; border-color: rgba(3,105,161,.3); }
+[data-theme="dark"] .toast         { background: var(--color-surface); box-shadow: var(--shadow-lg); }
+[data-theme="dark"] .mkt-nav       { background: rgba(15,25,35,.92); border-color: var(--color-border); }
+[data-theme="dark"] .mkt-nav-brand { color: var(--color-primary); }
+[data-theme="dark"] .mkt-nav-link  { color: var(--color-text-secondary); }
+[data-theme="dark"] .mkt-nav-link:hover { color: var(--color-primary); background: var(--color-primary-light); }
+[data-theme="dark"] .auth-right    { background: var(--color-bg); }
+[data-theme="dark"] .auth-card     { background: var(--color-surface); }
+[data-theme="dark"] .feature-card  { background: var(--color-surface); border-color: var(--color-border); }
+[data-theme="dark"] .feature-icon  { filter: brightness(.85) saturate(.9); }
+[data-theme="dark"] .badge-neutral { background: var(--color-surface-raised); color: var(--color-text-secondary); }
 
 /*!******************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[3]!./styles/marketing.css ***!
@@ -1174,5 +1225,60 @@ h1,h2,h3,h4,h5,h6 { line-height: 1.2; font-weight: 700; letter-spacing: -0.02em;
   .stats-inner   { grid-template-columns: 1fr 1fr; }
   .hero { padding: 70px 0 60px; }
   .hero-actions { flex-direction: column; }
+}
+
+/* ────────────────────────────────────────────────────────
+   SPORT TILES
+──────────────────────────────────────────────────────── */
+.sport-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 22px 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  text-align: center;
+  cursor: default;
+  transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+}
+.sport-tile:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+  border-color: var(--color-primary);
+}
+.sport-tile-icon {
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+  transition: background var(--transition);
+}
+.sport-tile:hover .sport-tile-icon {
+  background: var(--color-primary-light);
+}
+.sport-tile-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -.01em;
+}
+.sport-tile-sub {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+/* dark mode tile */
+[data-theme="dark"] .sport-tile { background: var(--color-surface); border-color: var(--color-border); }
+[data-theme="dark"] .sport-tile:hover { border-color: var(--color-primary); }
+[data-theme="dark"] .sport-tile-icon { background: var(--color-surface-raised); }
+
+/* Benefits strip responsive */
+@media (max-width: 900px) {
+  .sport-benefits-grid { grid-template-columns: 1fr !important; }
 }
 
