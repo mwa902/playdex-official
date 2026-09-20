@@ -1,0 +1,156 @@
+/* ── Light mode tokens ── */
+:root,
+[data-theme="light"] {
+  /* Brand */
+  --color-primary:        #0f5b78;
+  --color-primary-dark:   #0a4460;
+  --color-primary-light:  #e8f4f8;
+  --color-accent:         #d97706;
+  --color-accent-light:   #fbbf24;
+
+  /* Surfaces */
+  --color-bg:             #f0f4f6;
+  --color-surface:        #ffffff;
+  --color-surface-raised: #f8fafc;
+  --color-surface-hover:  #eef2f5;
+  --color-border:         #dde3e8;
+  --color-border-strong:  #b5c2cc;
+
+  /* Text */
+  --color-text:           #17212b;
+  --color-text-secondary: #4e5f6d;
+  --color-text-muted:     #8094a2;
+  --color-text-inverse:   #ffffff;
+
+  /* Status */
+  --color-success:        #16a34a;
+  --color-success-bg:     #dcfce7;
+  --color-warning:        #d97706;
+  --color-warning-bg:     #fef3c7;
+  --color-error:          #dc2626;
+  --color-error-bg:       #fee2e2;
+  --color-info:           #0369a1;
+  --color-info-bg:        #e0f2fe;
+
+  /* Sidebar */
+  --sidebar-width:        240px;
+  --sidebar-bg:           #0d1f2d;
+  --sidebar-text:         #a8bdc9;
+  --sidebar-text-active:  #ffffff;
+  --sidebar-item-active:  rgba(15,91,120,0.55);
+  --sidebar-item-hover:   rgba(255,255,255,0.06);
+
+  /* Theme toggle */
+  --toggle-track-bg:      #cbd5e1;
+  --toggle-track-active:  #0f5b78;
+  --toggle-thumb:         #ffffff;
+
+  /* Misc */
+  --header-height:  60px;
+  --radius-sm:      4px;
+  --radius-md:      8px;
+  --radius-lg:      12px;
+  --radius-xl:      16px;
+  --radius-full:    9999px;
+  --shadow-xs:      0 1px 2px rgba(0,0,0,.06);
+  --shadow-sm:      0 1px 6px rgba(0,0,0,.08);
+  --shadow-md:      0 4px 16px rgba(0,0,0,.10);
+  --shadow-lg:      0 8px 32px rgba(0,0,0,.14);
+  --font-sans:      'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono:      'JetBrains Mono', 'Fira Code', monospace;
+  --transition:     0.18s ease;
+}
+
+/* ── Dark mode tokens ── */
+[data-theme="dark"] {
+  --color-primary:        #38a9c9;
+  --color-primary-dark:   #1e8fad;
+  --color-primary-light:  #0d2d3a;
+  --color-accent:         #f59e0b;
+  --color-accent-light:   #fcd34d;
+
+  --color-bg:             #0f1923;
+  --color-surface:        #182535;
+  --color-surface-raised: #1e2f42;
+  --color-surface-hover:  #243548;
+  --color-border:         #2a3d52;
+  --color-border-strong:  #3d5570;
+
+  --color-text:           #e2eaf0;
+  --color-text-secondary: #94afc0;
+  --color-text-muted:     #5a7a90;
+  --color-text-inverse:   #0f1923;
+
+  --color-success:        #4ade80;
+  --color-success-bg:     rgba(22,163,74,.15);
+  --color-warning:        #fbbf24;
+  --color-warning-bg:     rgba(217,119,6,.15);
+  --color-error:          #f87171;
+  --color-error-bg:       rgba(220,38,38,.15);
+  --color-info:           #60a5fa;
+  --color-info-bg:        rgba(3,105,161,.18);
+
+  --sidebar-bg:           #0a1520;
+  --sidebar-text:         #7a9fb5;
+  --sidebar-text-active:  #e2eaf0;
+  --sidebar-item-active:  rgba(56,169,201,0.2);
+  --sidebar-item-hover:   rgba(255,255,255,0.05);
+
+  --toggle-track-bg:      #2a3d52;
+  --toggle-track-active:  #38a9c9;
+  --toggle-thumb:         #ffffff;
+
+  --shadow-xs:  0 1px 2px rgba(0,0,0,.3);
+  --shadow-sm:  0 1px 6px rgba(0,0,0,.35);
+  --shadow-md:  0 4px 16px rgba(0,0,0,.45);
+  --shadow-lg:  0 8px 32px rgba(0,0,0,.55);
+}
+
+/* ── Theme toggle button ── */
+.theme-toggle {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  flex-shrink: 0;
+}
+.theme-toggle-track {
+  width: 48px;
+  height: 26px;
+  border-radius: 13px;
+  background: var(--toggle-track-bg);
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  padding: 3px;
+}
+[data-theme="dark"] .theme-toggle-track {
+  background: var(--toggle-track-active);
+}
+.theme-toggle-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--toggle-thumb);
+  box-shadow: 0 1px 4px rgba(0,0,0,.25);
+  transform: translateX(0);
+  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+[data-theme="dark"] .theme-toggle-thumb {
+  transform: translateX(22px);
+}
+.theme-toggle-icon {
+  width: 12px;
+  height: 12px;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+.theme-toggle-icon-sun  { color: #f59e0b; }
+.theme-toggle-icon-moon { color: #64748b; }

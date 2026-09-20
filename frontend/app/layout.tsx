@@ -1,9 +1,18 @@
 import type { Metadata } from 'next';
-import { AppShell } from '@/components/app-shell';
+import { AuthProvider } from '@/context/AuthContext';
 import './globals.css';
 
-export const metadata: Metadata = { title: 'Playdex Operations', description: 'Sports event operations console' };
+export const metadata: Metadata = {
+  title: { default: 'Playdex', template: '%s | Playdex' },
+  description: 'The sports event operations platform — manage venues, events, and bookings from one dashboard.',
+};
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en"><body><AppShell>{children}</AppShell></body></html>;
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <AuthProvider>{children}</AuthProvider>
+      </body>
+    </html>
+  );
 }

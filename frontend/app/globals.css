@@ -1,32 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap');
-
-:root { --primary: #0f5b78; --accent: #d97706; --surface: #f5f7f8; --text: #17212b; --muted: #64727d; --border: #d5dde2; --font: 'IBM Plex Sans', 'Segoe UI', sans-serif; }
-* { box-sizing: border-box; }
-html, body { margin: 0; min-height: 100%; background: var(--surface); color: var(--text); font-family: var(--font); }
-body { transition: background .2s ease, color .2s ease; }
-button, input { font: inherit; }
-.shell { min-height: 100vh; }
-.app-main { max-width: 1440px; margin: 0 auto; padding: 28px 36px 56px; }
-.page-grid { display: grid; gap: 18px; }
-.metric-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-.data-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(280px, .8fr); gap: 18px; }
-.table-wrap { overflow-x: auto; }
-.hero { position: relative; overflow: hidden; margin-bottom: 20px; padding: 30px; color: white; border-radius: 8px; background: linear-gradient(115deg, #0f5b78, #1686a4 55%, #d97706); box-shadow: 0 14px 30px #0f5b7830; }
-.hero-mesh { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: .55; }
-.hero-content { position: relative; max-width: 720px; }
-.eyebrow { margin: 0 0 10px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .86; }
-.eyebrow::before { content: ''; display: inline-block; width: 6px; height: 6px; margin: 0 8px 1px 0; border-radius: 50%; background: #fbbf24; }
-.hero h1 { max-width: 24ch; margin: 0; font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.05; letter-spacing: 0; }
-.hero p { max-width: 60ch; margin: 14px 0 22px; opacity: .9; }
-.section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
-.section-heading h2 { margin: 0; }
-.status-pill { display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; background: #e8eef1; color: #31515f; }
-.status-pill.warning { background: #fff1da; color: #9a5500; }
-.status-pill.success { background: #e2f4eb; color: #17683f; }
-.status-pill.danger { background: #fde8e7; color: #a43833; }
-.detail-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin: 0; }
-.detail-list dt { color: var(--muted); font-size: 12px; }
-.detail-list dd { margin: 3px 0 0; font-weight: 600; }
-@media (max-width: 900px) { .metric-grid { grid-template-columns: repeat(2, 1fr); } .data-grid { grid-template-columns: 1fr; } }
-@media (max-width: 620px) { .app-main { padding: 20px 16px 40px; } .metric-grid { grid-template-columns: 1fr; } .hero { padding: 22px; } .detail-list { grid-template-columns: 1fr; } }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+@import '../styles/tokens.css';
+@import '../styles/reset.css';
+@import '../styles/components.css';
+@import '../styles/layout.css';
+@import '../styles/marketing.css';
