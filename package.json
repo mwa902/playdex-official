@@ -8,6 +8,8 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
+    "clean": "rimraf dist",
+    "watch": "tsc --watch",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -17,7 +19,11 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "emulators:start": "docker compose up -d postgres",
+    "emulators:stop": "docker compose down",
+    "emulators:clean": "docker compose down -v",
+    "db:migrate": "node -e \"const fs=require('fs'); const path=require('path'); const {Client}=require('pg'); const connectionString=process.env.DATABASE_URL || 'postgresql://postgres:postgres@localhost:5432/localdev'; const client=new Client({connectionString}); (async()=>{ await client.connect(); await client.query('CREATE TABLE IF NOT EXISTS schema_migrations (id SERIAL PRIMARY KEY, version VARCHAR(255) UNIQUE NOT NULL, executed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)'); const migrationsDir=path.join(process.cwd(),'libs','database','migrations'); if(!fs.existsSync(migrationsDir)){ throw new Error('Migrations directory not found: ' + migrationsDir); } const files=fs.readdirSync(migrationsDir).filter(file=>file.endsWith('.sql')).sort(); for(const file of files){ const exists = await client.query('SELECT 1 FROM schema_migrations WHERE version = $1',[file]); if (exists.rowCount === 0) { const sql=fs.readFileSync(path.join(migrationsDir,file),'utf8'); await client.query('BEGIN'); await client.query(sql); await client.query('INSERT INTO schema_migrations (version) VALUES ($1)',[file]); await client.query('COMMIT'); console.log('Applied migration:', file); } } await client.end(); console.log('Database migrations completed.'); })().catch((error)=>{ console.error(error); process.exit(1); });\""
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

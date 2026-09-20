@@ -28,11 +28,6 @@ import { EventTypeModule } from './event_type/event_type.module';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    console.log(
-        process.env.DATABASE_USERNAME,
-        typeof process.env.DATABASE_USERNAME,
-    );
-    console.log(process.env.DATABASE_PASSWORD);
     consumer.apply(LoginMiddleware).forRoutes('*');
   }
 }

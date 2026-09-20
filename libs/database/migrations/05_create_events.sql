@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS events;
+CREATE TABLE IF NOT EXISTS events
 
 CREATE TABLE events
 (
@@ -14,8 +14,13 @@ CREATE TABLE events
     status          VARCHAR(20)      NOT NULL DEFAULT 'Available' CHECK (status IN ('Available', 'Not-Available')),
     created_at      TIMESTAMP                 DEFAULT CURRENT_TIMESTAMP,
     updated_at      TIMESTAMP                 DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (organization_id) REFERENCES organization (id),
-    FOREIGN KEY (venue_id) REFERENCES venue (id),
-    FOREIGN KEY (event_type_id) REFERENCES event_type (id)
+    FOREIGN KEY (organization_id) REFERENCES organization (id) ON DELETE CASCADE,
+    FOREIGN KEY (venue_id) REFERENCES venue (id) ON DELETE RESTRICT,
+    FOREIGN KEY (event_type_id) REFERENCES event_type (id) ON DELETE RESTRICT,
+    CONSTRAINT events_time_order CHECK (ended_at > started_at)
 );
+
+CREATE INDEX IF NOT EXISTS events_organization_id_idx ON events (organization_id);
+CREATE INDEX IF NOT EXISTS events_venue_id_idx ON events (venue_id);
+CREATE INDEX IF NOT EXISTS events_event_type_id_idx ON events (event_type_id);
 

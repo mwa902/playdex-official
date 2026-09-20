@@ -1,16 +1,22 @@
-DROP TABLE IF EXISTS Users;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
-CREATE TYPE user_role AS ENUM('Admin','user','organization');
-CREATE TYPE active_idea AS ENUM('Active','Not-Active');
+DO $$ BEGIN
+     CREATE TYPE user_role AS ENUM ('Admin', 'user', 'organization');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
 
-CREATE TABLE users (
-     id UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
-     role_id UUID NOT NULL,
+DO $$ BEGIN
+     CREATE TYPE active_idea AS ENUM ('Active', 'Not-Active');
+EXCEPTION WHEN duplicate_object THEN NULL;
+END $$;
+
+CREATE TABLE IF NOT EXISTS users (
+     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
      name VARCHAR(45) NOT NULL,
-     email VARCHAR(50) UNIQUE NOT NULL,
-     password VARCHAR(40) NOT NULL,
+     email VARCHAR(254) UNIQUE NOT NULL,
+     password VARCHAR(255) NOT NULL,
      role user_role NOT NULL DEFAULT 'user',
-     is_active active_idea NOT NULL DEFAULT('Not-Active'),
-     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+     is_active active_idea NOT NULL DEFAULT 'Not-Active',
+     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
