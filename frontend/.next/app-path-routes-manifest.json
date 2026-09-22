@@ -1,13 +1,3 @@
 {
-  "/_not-found/page": "/_not-found",
-  "/(marketing)/page": "/",
-  "/(dashboard)/organizations/page": "/organizations",
-  "/(dashboard)/event-types/page": "/event-types",
-  "/(dashboard)/venues/page": "/venues",
-  "/(auth)/login/page": "/login",
-  "/(dashboard)/users/page": "/users",
-  "/(dashboard)/bookings/page": "/bookings",
-  "/(dashboard)/events/page": "/events",
-  "/(dashboard)/events/[id]/page": "/events/[id]",
-  "/(dashboard)/dashboard/page": "/dashboard"
+  "/(marketing)/page": "/"
 }
