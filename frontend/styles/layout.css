@@ -1,12 +1,12 @@
 /* ────────────────────────────────────────────────────────
    DASHBOARD LAYOUT (sidebar + content)
-──────────────────────────────────────────────────────── */
+──────────────────────────────────────────────────────── *
 .dash-layout {
   display: flex;
   min-height: 100vh;
 }
 
-/* ── Sidebar ── */
+
 .sidebar {
   width: var(--sidebar-width);
   min-height: 100vh;
@@ -250,12 +250,53 @@
 .mkt-footer {
   background: var(--sidebar-bg);
   color: var(--sidebar-text);
-  padding: 40px 32px;
-  text-align: center;
+  padding: 48px 32px 28px;
   font-size: 14px;
 }
-.mkt-footer a { color: var(--sidebar-text); }
+.mkt-footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.mkt-footer-brand,
+.mkt-footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+.mkt-footer-brand p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.72);
+  line-height: 1.7;
+  max-width: 360px;
+}
+.mkt-footer-col h4 {
+  margin: 0 0 4px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+}
+.mkt-footer a,
+.mkt-footer span {
+  color: var(--sidebar-text);
+  text-decoration: none;
+  line-height: 1.8;
+}
 .mkt-footer a:hover { color: #fff; }
+.mkt-footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
+}
 
 /* ────────────────────────────────────────────────────────
    AUTH LAYOUT
@@ -307,6 +348,21 @@
 @media (max-width: 1100px) {
   .metrics-grid { grid-template-columns: repeat(2, 1fr); }
   .two-col      { grid-template-columns: 1fr; }
+  .mkt-footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .mkt-footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .mkt-footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .mkt-footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 @media (max-width: 900px) {

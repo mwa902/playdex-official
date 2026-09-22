@@ -259,14 +259,14 @@ export function LandingPage() {
             <a href="#stats"    className="mkt-nav-link">Platform</a>
           </div>
 
-          {/* Right — CTA only (floating toggle handles theme globally) */}
+        
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <Link href="/login" className="btn btn-primary btn-sm">Sign in</Link>
           </div>
         </div>
       </nav>
 
-      {/* ── Hero ── */}
+  
       <section className="hero">
         <div className="mkt-section">
           <div className="hero-inner">
@@ -304,7 +304,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* ── Stats ── */}
+    
       <section id="stats" className="stats-bar">
         <div className="mkt-section">
           <div className="stats-inner">
@@ -318,7 +318,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* ── Features ── */}
+  
       <section id="features" className="features-section">
         <div className="mkt-section">
           <span className="section-label">Capabilities</span>
@@ -478,20 +478,42 @@ export function LandingPage() {
       {/* ── Footer ── */}
       <footer className="mkt-footer">
         <div className="mkt-section">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 700, fontSize: 16, color: '#fff' }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2.5" strokeLinecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-              Playdex
+          <div className="mkt-footer-grid">
+            <div className="mkt-footer-brand">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700, fontSize: 18, color: '#fff' }}>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2.5" strokeLinecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                Playdex
+              </div>
+              <p>
+                Centralized sports operations software for venues, clubs, and event teams managing schedules, bookings, and live event coordination.
+              </p>
             </div>
-            <div style={{ display: 'flex', gap: 24, fontSize: 13 }}>
+
+            <div className="mkt-footer-col">
+              <h4>Platform</h4>
               <a href="#features">Features</a>
               <a href="#sports">Sports</a>
-              <a href="#how">Process</a>
-              <Link href="/login">Sign in</Link>
+              <a href="#how">How it works</a>
             </div>
-            <div style={{ fontSize: 12, opacity: 0.45 }}>
-              © {new Date().getFullYear()} Playdex Operations Platform
+
+            <div className="mkt-footer-col">
+              <h4>Company</h4>
+              <Link href="/login">Operations dashboard</Link>
+              <a href="#pricing">Pricing</a>
+              <a href="#support">Support</a>
             </div>
+
+            <div className="mkt-footer-col">
+              <h4>Contact</h4>
+              <a href="mailto:hello@playdex.io">hello@playdex.io</a>
+              <a href="tel:+15550198">+1 (555) 0198</a>
+              <span>Live ops support</span>
+            </div>
+          </div>
+
+          <div className="mkt-footer-bottom">
+            <span>© {new Date().getFullYear()} Playdex Operations Platform</span>
+            <span>Built for organizers, venues, and event teams</span>
           </div>
         </div>
       </footer>
