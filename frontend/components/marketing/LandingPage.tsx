@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useState, type FormEvent } from 'react';
 import { useTheme } from '@/context/ThemeContext';
 
 /* ─── Sport tile SVG icons ──────────────────────────────────────────────── */
@@ -240,6 +241,41 @@ const stats = [
 
 export function LandingPage() {
   const { dark } = useTheme();
+  const [selectedSports, setSelectedSports] = useState<string[]>([]);
+  const [location, setLocation] = useState('');
+  const [mapSearchTerm, setMapSearchTerm] = useState('sports venues');
+  const [hasSearched, setHasSearched] = useState(false);
+  const [locationError, setLocationError] = useState('');
+
+  const toggleSport = (sport: string) => {
+    setSelectedSports(current => current.includes(sport)
+      ? current.filter(item => item !== sport)
+      : [...current, sport]);
+  };
+
+  const handleSearch = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const searchTerm = `${selectedSports.join(' ')} sports facilities in ${location.trim()}`;
+    setMapSearchTerm(searchTerm);
+    setHasSearched(true);
+  };
+
+  const handleUseLocation = () => {
+    setLocationError('');
+    if (!navigator.geolocation) {
+      setLocationError('Location access is not available in this browser.');
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      ({ coords }) => setLocation(`${coords.latitude.toFixed(4)}, ${coords.longitude.toFixed(4)}`),
+      () => setLocationError('Location access was unavailable. Enter a city or postcode instead.'),
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 },
+    );
+  };
+
+  const mapEmbedUrl = `https://maps.google.com/maps?q=${encodeURIComponent(mapSearchTerm)}&output=embed`;
+  const mapLinkUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapSearchTerm)}`;
 
   return (
     <div className="marketing-layout">
@@ -253,6 +289,7 @@ export function LandingPage() {
 
           {/* Center links */}
           <div className="mkt-nav-links">
+            <a href="#discover" className="mkt-nav-link">Find a place</a>
             <a href="#features" className="mkt-nav-link">Features</a>
             <a href="#sports"   className="mkt-nav-link">Sports</a>
             <a href="#how"      className="mkt-nav-link">How it works</a>
@@ -267,38 +304,95 @@ export function LandingPage() {
       </nav>
 
   
-      <section className="hero">
+      <section id="discover" className="finder-hero">
         <div className="mkt-section">
-          <div className="hero-inner">
-            <div className="hero-eyebrow">Sports Management Platform</div>
-            <h1>
-              Run every match.<br />
-              <span>Own every result.</span>
-            </h1>
-            <p className="hero-desc">
-              Playdex is the professional operations console for sports event organisers.
-              Schedule events, manage venues, process bookings, and coordinate organisations —
-              all from one authoritative dashboard.
-            </p>
-            <div className="hero-actions">
-              <Link href="/login" className="btn btn-primary btn-lg">
-                Access Dashboard {Icons.arrow}
-              </Link>
-              <a href="#features" className="btn btn-lg" style={{
-                background: 'rgba(255,255,255,.1)',
-                color: '#fff',
-                border: '1px solid rgba(255,255,255,.2)',
-              }}>
-                Explore features
-              </a>
-            </div>
-            <div style={{ marginTop: 36, display: 'flex', gap: 14, flexWrap: 'wrap' }}>
-              {['No setup fees', 'Real-time data', 'Role-based access', 'REST API included'].map(b => (
-                <div key={b} className="hero-badge">
-                  <span style={{ color: 'var(--color-accent-light)', display: 'flex' }}>{Icons.check}</span>
-                  {b}
+          <div className="finder-heading">
+            <div className="hero-eyebrow">Playdex · Find your game</div>
+            <h1>Find your place<br /><span>to play.</span></h1>
+            <p>Choose your sport, enter an area, and explore what is nearby.</p>
+          </div>
+
+          <div className="finder-workspace">
+            <form className="finder-filters" onSubmit={handleSearch}>
+              <div className="finder-field-heading">
+                <div>
+                  <span className="finder-step">01</span>
+                  <h2>Choose a sport</h2>
                 </div>
-              ))}
+                <span className="finder-selection-count">
+                  {selectedSports.length ? `${selectedSports.length} selected` : 'Select any'}
+                </span>
+              </div>
+              <div className="finder-sports" aria-label="Choose sports">
+                {SPORTS.map(sport => (
+                  <button
+                    key={sport.name}
+                    className={`finder-sport${selectedSports.includes(sport.name) ? ' is-selected' : ''}`}
+                    type="button"
+                    aria-pressed={selectedSports.includes(sport.name)}
+                    onClick={() => toggleSport(sport.name)}
+                  >
+                    <span style={{ color: sport.color }}>{sport.icon}</span>
+                    {sport.name}
+                  </button>
+                ))}
+              </div>
+
+              <label className="finder-location-label" htmlFor="finder-location">
+                <span className="finder-step">02</span> Where do you want to play?
+              </label>
+              <div className="finder-location-control">
+                <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z" />
+                  <circle cx="12" cy="10" r="2.5" />
+                </svg>
+                <input
+                  id="finder-location"
+                  type="text"
+                  placeholder="City, neighborhood, or postcode"
+                  value={location}
+                  onChange={event => setLocation(event.target.value)}
+                  onFocus={() => setLocationError('')}
+                  required
+                />
+              </div>
+              <button className="finder-use-location" type="button" onClick={handleUseLocation}>
+                Use my current location
+              </button>
+              {locationError && <p className="finder-error" role="status">{locationError}</p>}
+              <button
+                className="finder-search-button"
+                type="submit"
+                disabled={!selectedSports.length || !location.trim()}
+              >
+                Search on map {Icons.arrow}
+              </button>
+            </form>
+
+            <div className="finder-map-panel">
+              <div className="finder-map-heading">
+                <div>
+                  <span className="finder-map-kicker">Google Maps preview</span>
+                  <h2>{hasSearched ? location : 'Explore sports nearby'}</h2>
+                </div>
+                {hasSearched && (
+                  <a className="finder-map-link" href={mapLinkUrl} target="_blank" rel="noreferrer">
+                    Open map {Icons.arrow}
+                  </a>
+                )}
+              </div>
+              <iframe
+                className="finder-map"
+                src={mapEmbedUrl}
+                title={hasSearched ? `Google Maps search for ${mapSearchTerm}` : 'Google Maps sports venue preview'}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              <p className="finder-map-note">
+                {hasSearched
+                  ? 'This map is a Google Maps preview. Playdex venue listings will appear here as locations are added.'
+                  : 'Choose a sport and location to tailor your map search.'}
+              </p>
             </div>
           </div>
         </div>
