@@ -9,4 +9,7 @@ export class UpdateVenueDto {
   @ApiPropertyOptional() @IsOptional() @IsString() address?: string;
   @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(60) city?: string;
   @ApiPropertyOptional() @IsOptional() @Type(() => Number) @IsInt() @Min(1) capacity?: number;
+  @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(60) sport_type?: string;
+  @ApiPropertyOptional() @IsOptional() @IsString() @MaxLength(30) phone?: string;
+  @ApiPropertyOptional() @IsOptional() @IsString() google_maps_url?: string;
 }

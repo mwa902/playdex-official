@@ -39,8 +39,8 @@ export class VenueService {
     }
 
     const { rows } = await this.db.query<Venue>(
-      `INSERT INTO venue (organization_id, name, description, address, city, capacity)
-       VALUES ($1, $2, $3, $4, $5, $6)
+      `INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
        RETURNING *`,
       [
         dto.organization_id,
@@ -49,6 +49,9 @@ export class VenueService {
         dto.address,
         dto.city || 'Lahore',
         dto.capacity,
+        dto.sport_type || 'Arena',
+        dto.phone ?? null,
+        dto.google_maps_url ?? null,
       ],
     );
     return rows[0];
@@ -71,12 +74,15 @@ export class VenueService {
     const values: any[]    = [];
     let   idx = 1;
 
-    if (dto.organization_id !== undefined) { fields.push(`organization_id = $${idx++}`); values.push(dto.organization_id); }
-    if (dto.name            !== undefined) { fields.push(`name            = $${idx++}`); values.push(dto.name); }
-    if (dto.description     !== undefined) { fields.push(`description     = $${idx++}`); values.push(dto.description); }
-    if (dto.address         !== undefined) { fields.push(`address         = $${idx++}`); values.push(dto.address); }
-    if (dto.city            !== undefined) { fields.push(`city            = $${idx++}`); values.push(dto.city); }
-    if (dto.capacity        !== undefined) { fields.push(`capacity        = $${idx++}`); values.push(dto.capacity); }
+    if (dto.organization_id !== undefined) { fields.push(`organization_id  = $${idx++}`); values.push(dto.organization_id); }
+    if (dto.name            !== undefined) { fields.push(`name             = $${idx++}`); values.push(dto.name); }
+    if (dto.description     !== undefined) { fields.push(`description      = $${idx++}`); values.push(dto.description); }
+    if (dto.address         !== undefined) { fields.push(`address          = $${idx++}`); values.push(dto.address); }
+    if (dto.city            !== undefined) { fields.push(`city             = $${idx++}`); values.push(dto.city); }
+    if (dto.capacity        !== undefined) { fields.push(`capacity         = $${idx++}`); values.push(dto.capacity); }
+    if (dto.sport_type      !== undefined) { fields.push(`sport_type       = $${idx++}`); values.push(dto.sport_type); }
+    if (dto.phone           !== undefined) { fields.push(`phone            = $${idx++}`); values.push(dto.phone); }
+    if (dto.google_maps_url !== undefined) { fields.push(`google_maps_url  = $${idx++}`); values.push(dto.google_maps_url); }
 
     if (!fields.length) throw new BadRequestException('No fields to update');
 

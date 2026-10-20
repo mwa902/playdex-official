@@ -6,6 +6,9 @@ export interface Venue {
   address: string;
   city: string;
   capacity: number;
+  sport_type: string;
+  phone: string | null;
+  google_maps_url: string | null;
   created_at: Date;
   updated_at: Date;
 }

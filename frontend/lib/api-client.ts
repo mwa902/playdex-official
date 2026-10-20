@@ -248,8 +248,9 @@ export const api = {
     req<{ deleted: boolean }>(`/venues/${id}`, { method: 'DELETE' }),
 
   // Bookings
-  listBookings:   () => req<BookingRecord[]>('/bookings'),
-  getBooking:     (id: string) => req<BookingRecord>(`/bookings/${id}`),
+  listBookings:        () => req<BookingRecord[]>('/bookings'),
+  listBookingsByEvent: (eventId: string) => req<BookingRecord[]>(`/bookings/event/${eventId}`),
+  getBooking:          (id: string) => req<BookingRecord>(`/bookings/${id}`),
   createBooking:  (dto: CreateBookingDto) =>
     req<BookingRecord>('/bookings', { method: 'POST', body: JSON.stringify(dto) }),
   updateBooking:  (id: string, dto: Partial<CreateBookingDto>) =>
