@@ -53,8 +53,33 @@ export interface VenueRecord {
   address: string;
   city: string;
   capacity: number;
+  sport_type: string;        // 'Arena' | 'Gym' | 'Pool'
+  phone: string | null;
+  google_maps_url: string | null;
   created_at: string;
   updated_at: string;
+}
+
+// ─── Public arena-finder helpers ─────────────────────────────────────────────
+export type SportTypeFilter = 'All' | 'Arena' | 'Gym' | 'Pool';
+
+/** Client-side filter — no extra endpoint needed (all venues come from /venues) */
+export function filterVenues(
+  venues: VenueRecord[],
+  search: string,
+  sport: SportTypeFilter,
+): VenueRecord[] {
+  const q = search.trim().toLowerCase();
+  return venues.filter((v) => {
+    const matchSport = sport === 'All' || v.sport_type === sport;
+    const matchSearch =
+      !q ||
+      v.name.toLowerCase().includes(q) ||
+      v.address.toLowerCase().includes(q) ||
+      v.city.toLowerCase().includes(q) ||
+      (v.description ?? '').toLowerCase().includes(q);
+    return matchSport && matchSearch;
+  });
 }
 
 export interface BookingRecord {
@@ -107,6 +132,9 @@ export interface CreateVenueDto {
   address: string;
   city?: string;
   capacity: number;
+  sport_type?: string;
+  phone?: string;
+  google_maps_url?: string;
 }
 
 export interface CreateBookingDto {
