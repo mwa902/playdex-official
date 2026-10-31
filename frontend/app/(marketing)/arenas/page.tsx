@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import type { Metadata } from 'next';
 import { ArenasPage } from '@/components/marketing/ArenasPage';
 
@@ -8,5 +9,9 @@ export const metadata: Metadata = {
 };
 
 export default function ArenasRoute() {
-  return <ArenasPage />;
+  return (
+    <Suspense fallback={<div className="page-loading">Loading venues…</div>}>
+      <ArenasPage />
+    </Suspense>
+  );
 }

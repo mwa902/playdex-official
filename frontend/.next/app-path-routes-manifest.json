@@ -1,0 +1,19 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/(dashboard)/bookings/page": "/bookings",
+  "/(dashboard)/event-types/page": "/event-types",
+  "/(dashboard)/events/[id]/page": "/events/[id]",
+  "/(dashboard)/events/page": "/events",
+  "/(dashboard)/dashboard/page": "/dashboard",
+  "/(dashboard)/organizations/page": "/organizations",
+  "/(dashboard)/users/page": "/users",
+  "/(marketing)/arenas/[id]/page": "/arenas/[id]",
+  "/(auth)/login/page": "/login",
+  "/(marketing)/arenas/page": "/arenas",
+  "/admin/arenas/page": "/admin/arenas",
+  "/admin/bookings/page": "/admin/bookings",
+  "/admin/dashboard/page": "/admin/dashboard",
+  "/(marketing)/page": "/",
+  "/admin/settings/page": "/admin/settings",
+  "/(dashboard)/venues/page": "/venues"
+}
