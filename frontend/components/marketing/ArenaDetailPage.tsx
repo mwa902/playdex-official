@@ -274,10 +274,22 @@ function SlotBookingModal({ open, onClose, event, venue, onBooked }: SlotBooking
     reader.readAsDataURL(file);
   };
 
-  const confirmPayment = () => {
+  const confirmPayment = async () => {
     if (!confirmedBooking) return;
     const method = PAYMENT_METHODS.find(m => m.id === selectedMethod)?.name ?? selectedMethod;
-    onBooked(confirmedBooking, method, screenshot);
+    setSaving(true);
+    setErr(null);
+    try {
+      const booking = await api.updateBooking(confirmedBooking.id, {
+        payment_method: method,
+        payment_slip: screenshot,
+      });
+      onBooked(booking, method, screenshot);
+    } catch (ex) {
+      setErr(ex instanceof ApiError ? ex.message : 'Could not save payment details. Please try again.');
+    } finally {
+      setSaving(false);
+    }
   };
 
   const methodObj = PAYMENT_METHODS.find(m => m.id === selectedMethod) ?? PAYMENT_METHODS[0];
@@ -352,14 +364,15 @@ function SlotBookingModal({ open, onClose, event, venue, onBooked }: SlotBooking
       footer={
         <>
           <button className="btn btn-secondary" onClick={() => setStep('form')}>Back</button>
-          <button className="btn btn-primary" onClick={confirmPayment}>
+          <button className="btn btn-primary" onClick={confirmPayment} disabled={saving}>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Done — Show My Slip
+            {saving ? 'Saving payment…' : 'Done — Show My Slip'}
           </button>
         </>
       }
     >
       {/* Amount */}
+      {err && <div className="alert alert-error"><span>✕</span><span>{err}</span></div>}
       <div className="slot-pay-amount">
         <div className="slot-pay-amount-label">Amount to transfer</div>
         <div className="slot-pay-amount-value">{total}</div>

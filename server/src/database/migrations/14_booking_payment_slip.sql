@@ -1,0 +1,3 @@
+ALTER TABLE booking
+  ADD COLUMN IF NOT EXISTS payment_method VARCHAR(40),
+  ADD COLUMN IF NOT EXISTS payment_slip TEXT;

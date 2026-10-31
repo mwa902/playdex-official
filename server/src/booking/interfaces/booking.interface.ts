@@ -8,6 +8,8 @@ export interface Booking {
   customer_phone: string;
   seats: number;
   status: BookingStatus;
+  payment_method: string | null;
+  payment_slip: string | null;
   booked_at: Date;
   created_at: Date;
   updated_at: Date;

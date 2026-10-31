@@ -76,6 +76,8 @@ export class BookingService {
       customer_phone: dto.customer_phone,
       seats:          dto.seats,
       status:         dto.status,
+      payment_method: dto.payment_method,
+      payment_slip:   dto.payment_slip,
     };
 
     for (const [col, val] of Object.entries(map)) {
