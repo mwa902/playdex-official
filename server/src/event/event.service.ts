@@ -38,8 +38,8 @@ export class EventService {
     const { rows } = await this.db.query<Event>(
       `INSERT INTO events
          (organization_id, venue_id, event_type_id, name, description,
-          started_at, ended_at, capacity, status)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)
+          started_at, ended_at, capacity, status, price)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
        RETURNING *`,
       [
         dto.organization_id,
@@ -51,6 +51,7 @@ export class EventService {
         dto.ended_at,
         dto.capacity,
         dto.status ?? 'Available',
+        dto.price ?? null,
       ],
     );
     return rows[0];
@@ -79,6 +80,7 @@ export class EventService {
       ended_at:        dto.ended_at,
       capacity:        dto.capacity,
       status:          dto.status,
+      price:           dto.price,
     };
 
     for (const [col, val] of Object.entries(map)) {

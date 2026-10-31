@@ -11,6 +11,7 @@ export interface Event {
   ended_at: Date;
   capacity: number;
   status: EventStatus;
+  price: number | null;
   created_at: Date;
   updated_at: Date;
 }

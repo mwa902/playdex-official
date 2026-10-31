@@ -27,4 +27,7 @@ export class CreateEventDto {
 
   @ApiPropertyOptional({ enum: ['Available', 'Not-Available'], default: 'Available' })
   @IsOptional() @IsEnum(['Available', 'Not-Available']) status?: 'Available' | 'Not-Available';
+
+  @ApiPropertyOptional({ example: 1500, description: 'Price in PKR. Null = free / contact venue.' })
+  @IsOptional() @Type(() => Number) @IsInt() @Min(0) price?: number;
 }

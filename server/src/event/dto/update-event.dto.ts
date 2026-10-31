@@ -12,4 +12,5 @@ export class UpdateEventDto {
   @ApiPropertyOptional() @IsOptional() @IsDateString() ended_at?: string;
   @ApiPropertyOptional() @IsOptional() @Type(() => Number) @IsInt() @Min(1) capacity?: number;
   @ApiPropertyOptional() @IsOptional() @IsEnum(['Available', 'Not-Available']) status?: 'Available' | 'Not-Available';
+  @ApiPropertyOptional() @IsOptional() @Type(() => Number) @IsInt() @Min(0) price?: number;
 }
