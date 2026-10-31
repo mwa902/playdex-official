@@ -1,98 +1,224 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Playdex — Lahore Sports Venue & Booking Platform
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A full-stack web platform for discovering sports arenas, gyms, and swimming pools across Lahore.
+Users browse 135+ venues, view available time slots, and book with a cash-on-arrival e-slip.
+Admins manage venues and create booking slots through a dedicated admin panel.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Tech Stack
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+| Layer | Technology |
+|-------|-----------|
+| Frontend | Next.js 15 (App Router), React 19, TypeScript |
+| Backend  | NestJS, TypeScript |
+| Database | PostgreSQL 16 |
+| Styling  | Custom CSS design tokens (light + dark mode) |
+| Auth     | localStorage session, bcrypt password hashing |
 
-## Project setup
+---
 
-```bash
-$ npm install
-```
+## Login Credentials
 
-## Compile and run the project
+### Admin Panel — `/admin/login`
 
-```bash
-# development
-$ npm run start
+| Name | Email | Password | Role |
+|------|-------|----------|------|
+| Super Admin | `superadmin@playdex.io` | `SuperAdmin@2024` | superadmin |
+| Platform Admin | `admin@playdex.io` | `Admin@2024` | admin |
+| Wahad Ahmed | `wahad@playdex.io` | `Wahad@2024` | admin |
 
-# watch mode
-$ npm run start:dev
+### User Login — `/login`
 
-# production mode
-$ npm run start:prod
-```
+Same accounts above work here too. Regular users can also register via sign-up.
 
-## Run tests
+---
+
+## Local Development
+
+### Prerequisites
+
+- Node.js 20+
+- PostgreSQL 16 running locally
+- Two terminal windows
+
+### 1. Clone and install
 
 ```bash
-# unit tests
-$ npm run test
+git clone https://github.com/your-org/playdex-official.git
+cd playdex-official
 
-# e2e tests
-$ npm run test:e2e
+# Install backend deps
+cd server && npm install
 
-# test coverage
-$ npm run test:cov
+# Install frontend deps
+cd ../frontend && npm install
 ```
+
+### 2. Environment setup
+
+**Backend** — create `server/.env`:
+```env
+PORT=5000
+DATABASE_URL=postgresql://YOUR_USER:YOUR_PASSWORD@localhost:5432/YOUR_DB
+FRONTEND_URL=http://localhost:3000
+AUTH_TOKEN=Bearer-my-secret-token
+```
+
+**Frontend** — create `frontend/.env.local`:
+```env
+NEXT_PUBLIC_API_BASE_URL=http://localhost:5000
+```
+
+### 3. Run both servers
+
+**Terminal 1 — Backend:**
+```bash
+cd server
+npm run start:dev
+```
+Runs on **http://localhost:5000**
+Swagger docs at **http://localhost:5000/docs**
+
+**Terminal 2 — Frontend:**
+```bash
+cd frontend
+npm run dev
+```
+Runs on **http://localhost:3000**
+
+---
+
+## Key URLs
+
+| URL | Description |
+|-----|-------------|
+| `localhost:3000` | Landing page |
+| `localhost:3000/arenas` | Public venue finder (135 Lahore venues) |
+| `localhost:3000/arenas/:id` | Venue detail — slots with timing, price, book |
+| `localhost:3000/admin/login` | Admin login |
+| `localhost:3000/admin/arenas` | Admin panel — manage venues & add slots |
+| `localhost:3000/login` | User login |
+| `localhost:3000/dashboard` | Operations dashboard (admin) |
+| `localhost:5000/docs` | Swagger API docs |
+
+---
+
+## Features
+
+### Public Site
+- Browse 135 sports arenas, gyms, and pools across Lahore
+- Search by name, area, or description
+- Filter by type: Arena / Gym / Pool
+- Google Maps embed + direct map links
+- Venue detail page with address, phone (tap-to-call), capacity
+- Slot boxes showing: date, time range, seats, price (PKR), cash-on-arrival badge
+- Book a slot (requires login)
+- E-slip generation with print support after booking
+
+### Admin Panel
+- Separate login at `/admin/login`
+- Stats overview: total venues, slots, active slots
+- Search and filter all 135 venues
+- Expand any venue to see its current slots
+- Add slots: name, sport type, start/end time, capacity, price, availability
+- Delete slots
+
+### Operations Dashboard (`/dashboard`)
+- Full CRUD for Events, Venues, Bookings, Organizations
+- User management (superadmin only)
+- Dark/light mode toggle
+
+---
+
+## Database Migrations
+
+Migrations run automatically on server startup. Files are in `server/src/database/migrations/`:
+
+| File | Description |
+|------|-------------|
+| `01_create_users.sql` | Users table |
+| `02_create_organization.sql` | Organizations |
+| `03_create_venue.sql` | Venues |
+| `04_create_event_type.sql` | Sport type categories |
+| `05_create_events.sql` | Events (slots) |
+| `06_create_booking.sql` | Bookings |
+| `07_indexes.sql` | Performance indexes |
+| `08_venue_sport_type_phone.sql` | Adds sport_type, phone, google_maps_url to venues |
+| `09_seed_lahore_venues.sql` | Seeds all 135 Lahore venues |
+| `10_venue_schema_fix.sql` | Removes duplicate address constraint |
+| `11_event_price.sql` | Adds price column to events |
+
+---
+
+## Project Structure
+
+```
+playdex-official/
+├── server/                   NestJS backend
+│   └── src/
+│       ├── booking/          Booking CRUD
+│       ├── database/         DB service + migrations
+│       ├── event/            Event/slot CRUD
+│       ├── event-type/       Sport categories
+│       ├── organization/     Organization CRUD
+│       ├── user/             Auth + user management
+│       └── venue/            Venue CRUD
+│
+├── frontend/                 Next.js frontend
+│   ├── app/
+│   │   ├── (auth)/login      User login page
+│   │   ├── (dashboard)/      Admin dashboard routes
+│   │   ├── (marketing)/      Public pages (home, arenas)
+│   │   └── admin/            Admin panel (login + arena management)
+│   ├── components/
+│   │   ├── admin/            AdminLoginPage, ArenaManagePage
+│   │   ├── dashboard/        Dashboard CRUD pages
+│   │   ├── marketing/        LandingPage, ArenasPage, ArenaDetailPage
+│   │   └── ui/               Modal, StatusBadge, StateView, Toast
+│   ├── context/              AuthContext, ThemeContext
+│   ├── hooks/                useData, useToast
+│   ├── lib/                  api-client.ts
+│   └── styles/               tokens.css, components.css, marketing.css
+│
+├── docker-compose.yml        Postgres + migrations (local)
+└── vercel.json               Vercel deployment config
+```
+
+---
 
 ## Deployment
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+### Frontend — Vercel
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+1. Push to GitHub
+2. Import repo in Vercel
+3. Set root directory to `frontend`
+4. Add env var: `NEXT_PUBLIC_API_BASE_URL=https://your-backend.railway.app`
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+### Backend — Railway
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+1. Connect GitHub repo in Railway
+2. Set root directory to `server`
+3. Add env vars:
+   ```
+   DATABASE_URL=postgresql://...
+   FRONTEND_URL=https://your-app.vercel.app
+   PORT=5000
+   ```
 
-## Resources
+---
 
-Check out a few resources that may come in handy when working with NestJS:
+## API Endpoints (summary)
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/users/login` | Login |
+| GET | `/venues` | List all venues |
+| GET | `/events` | List all slots |
+| POST | `/events` | Create slot (admin) |
+| DELETE | `/events/:id` | Delete slot (admin) |
+| POST | `/bookings` | Create booking |
+| GET | `/bookings/event/:id` | Bookings for a slot |
 
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Full docs at `http://localhost:5000/docs`
