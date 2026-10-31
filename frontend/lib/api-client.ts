@@ -98,7 +98,7 @@ export interface BookingRecord {
   seats: number;
   status: 'Pending' | 'Confirm Booking' | 'Cancelled';
   payment_method: string | null;
-  payment_slip: string | null;
+  payment_slip?: string | null;
   booked_at: string;
   created_at: string;
   updated_at: string;

@@ -8,13 +8,18 @@ import { Booking } from './interfaces/booking.interface';
 import { CreateBookingDto } from './dto/create-booking.dto';
 import { UpdateBookingDto } from './dto/update-booking.dto';
 
+const BOOKING_SUMMARY_COLUMNS = `
+  id, event_id, customer_name, customer_email, customer_phone, seats, status,
+  payment_method, booked_at, created_at, updated_at
+`;
+
 @Injectable()
 export class BookingService {
   constructor(private readonly db: DatabaseService) {}
 
   async findAll(): Promise<Booking[]> {
     const { rows } = await this.db.query<Booking>(
-      'SELECT * FROM booking ORDER BY booked_at DESC',
+      `SELECT ${BOOKING_SUMMARY_COLUMNS} FROM booking ORDER BY booked_at DESC`,
     );
     return rows;
   }
@@ -30,7 +35,7 @@ export class BookingService {
 
   async findByEvent(eventId: string): Promise<Booking[]> {
     const { rows } = await this.db.query<Booking>(
-      'SELECT * FROM booking WHERE event_id = $1 ORDER BY booked_at DESC',
+      `SELECT ${BOOKING_SUMMARY_COLUMNS} FROM booking WHERE event_id = $1 ORDER BY booked_at DESC`,
       [eventId],
     );
     return rows;

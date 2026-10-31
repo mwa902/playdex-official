@@ -1,6 +1,12 @@
 -- Migration 13: add unique constraint on event_type.name + seed all sport types
 
-ALTER TABLE event_type ADD CONSTRAINT IF NOT EXISTS event_type_name_key UNIQUE (name);
+DO $$ BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_constraint WHERE conname = 'event_type_name_key'
+  ) THEN
+    ALTER TABLE event_type ADD CONSTRAINT event_type_name_key UNIQUE (name);
+  END IF;
+END $$;
 
 INSERT INTO event_type (name, description) VALUES
   ('Cricket',      'Indoor and outdoor cricket nets and pitches'),

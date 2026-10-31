@@ -62,6 +62,7 @@ export function AdminShell({ children }: AdminShellProps) {
 
   const navItems = [
     { href: '/admin/dashboard', label: 'Dashboard',   icon: 'M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z' },
+    { href: '/admin/bookings',  label: 'Bookings',    icon: 'M5 4h14v16H5z M8 8h8 M8 12h8 M8 16h5' },
     { href: '/admin/arenas',    label: 'Manage Slots', icon: 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01' },
     { href: '/admin/settings',  label: 'Settings',     icon: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z' },
   ];
@@ -185,6 +186,19 @@ export function AdminShell({ children }: AdminShellProps) {
 
       {/* ── Main content ── */}
       <div className="admin-shell-main">
+        <nav className="admin-shell-mobile-nav" aria-label="Admin navigation">
+          {navItems.map(item => {
+            const active = item.href === '/admin/dashboard'
+              ? pathname === '/admin/dashboard'
+              : pathname.startsWith(item.href);
+            return (
+              <Link key={item.href} href={item.href} className={active ? 'active' : ''}>
+                <I d={item.icon} size={16} />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </nav>
         <main className="admin-shell-content">{children}</main>
       </div>
     </div>

@@ -119,7 +119,7 @@ export function AdminDashboard() {
         <div className="card">
           <div className="card-header">
             <h3 style={{ fontWeight: 700, fontSize: 15 }}>Recent Bookings</h3>
-            <span className="badge badge-info">{bookings.data?.length ?? 0}</span>
+            <Link href="/admin/bookings" className="btn btn-secondary btn-sm">Manage bookings</Link>
           </div>
           <div className="card-body" style={{ padding: 0 }}>
             {recentBookings.length === 0 ? (
