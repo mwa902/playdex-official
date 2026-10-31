@@ -9,6 +9,7 @@ import { VenueModule } from './venue/venue.module';
 import { EventTypeModule } from './event-type/event-type.module';
 import { EventModule } from './event/event.module';
 import { BookingModule } from './booking/booking.module';
+import { AppController } from './app.controller';
 
 import { LoggerMiddleware } from './middlewares/logger.middleware';
 import { GlobalExceptionFilter } from './filters/http-exception.filter';
@@ -16,6 +17,7 @@ import { ApiKeyGuard } from './guards/auth.guard';
 import { Reflector } from '@nestjs/core';
 
 @Module({
+  controllers: [AppController],
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     DatabaseModule,

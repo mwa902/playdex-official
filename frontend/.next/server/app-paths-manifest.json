@@ -1,4 +1,8 @@
 {
   "/(marketing)/page": "app/(marketing)/page.js",
-  "/(auth)/login/page": "app/(auth)/login/page.js"
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(marketing)/arenas/page": "app/(marketing)/arenas/page.js",
+  "/(marketing)/arenas/[id]/page": "app/(marketing)/arenas/[id]/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/admin/arenas/page": "app/admin/arenas/page.js"
 }
