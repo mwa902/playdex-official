@@ -6,8 +6,14 @@ export class ApiError extends Error {
     public readonly body: unknown,
   ) {
     const msg =
-      typeof body === 'object' && body !== null && 'message' in body
-        ? String((body as { message: unknown }).message)
+      status === 0
+        ? 'Backend unreachable — make sure the server is running on port 5000.'
+        : typeof body === 'object' && body !== null && 'message' in body
+        ? (() => {
+            const m = (body as { message: unknown }).message;
+            if (Array.isArray(m)) return m.join(', ');
+            return String(m);
+          })()
         : `HTTP ${status}: ${statusText}`;
     super(msg);
     this.name = 'ApiError';
@@ -20,7 +26,7 @@ export class ApiError extends Error {
 }
 
 // ─── Domain types (match backend interfaces exactly) ─────────────────────────
-export type UserRole = 'superadmin' | 'admin' | 'user' | 'Event Organization';
+export type UserRole = 'superadmin' | 'admin' | 'Admin' | 'user' | 'organization' | 'Event Organization';
 
 export interface User {
   id: string;
@@ -41,6 +47,7 @@ export interface EventRecord {
   ended_at: string;
   capacity: number;
   status: 'Available' | 'Not-Available';
+  price: number | null;
   created_at: string;
   updated_at: string;
 }
@@ -123,6 +130,7 @@ export interface CreateEventDto {
   ended_at: string;
   capacity: number;
   status?: 'Available' | 'Not-Available';
+  price?: number;
 }
 
 export interface CreateVenueDto {
@@ -160,17 +168,22 @@ export interface CreateUserDto {
 }
 
 // ─── HTTP kernel ─────────────────────────────────────────────────────────────
-// NEXT_PUBLIC_API_BASE_URL must be set in Vercel env vars to your deployed backend URL.
-// Falls back to localhost:5000 for local development only.
-const BASE = (process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:5000').replace(/\/$/, '');
+// Local dev  → calls backend directly on http://localhost:5000
+// Production → calls /api/* which Vercel rewrites to the deployed backend
+//              (NEXT_PUBLIC_API_BASE_URL is empty on Vercel → uses /api prefix)
+const RAW_BASE = (process.env.NEXT_PUBLIC_API_BASE_URL ?? '').replace(/\/$/, '');
+const isLocalhost = RAW_BASE.includes('localhost') || RAW_BASE.includes('127.0.0.1');
+// On Vercel RAW_BASE will be set to the backend URL via env var.
+// Fallback: use relative /api so the Next.js rewrite proxy handles it.
+const BASE = RAW_BASE || '/api';
 
 async function req<T>(path: string, options: RequestInit = {}): Promise<T> {
   let res: Response;
   try {
     res = await fetch(`${BASE}${path}`, {
       ...options,
-      // Only send credentials for same-origin; cross-origin (Vercel→API) uses omit
-      credentials: BASE.includes('localhost') ? 'include' : 'omit',
+      // Always omit credentials — we don't use cookies for auth, only localStorage
+      credentials: 'omit',
       headers: { 'Content-Type': 'application/json', ...(options.headers ?? {}) },
     });
   } catch (err) {

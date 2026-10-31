@@ -1,8 +1,10 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
 import { useTheme } from '@/context/ThemeContext';
+import { useAuth } from '@/context/AuthContext';
 
 /* ─── Sport tile SVG icons ──────────────────────────────────────────────── */
 const SportIcons = {
@@ -241,9 +243,12 @@ const stats = [
 
 export function LandingPage() {
   const { dark } = useTheme();
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
   const [selectedSports, setSelectedSports] = useState<string[]>([]);
   const [location, setLocation] = useState('');
-  const [mapSearchTerm, setMapSearchTerm] = useState('sports venues');
+  const [mapSearchTerm, setMapSearchTerm] = useState('sports venues Lahore');
   const [hasSearched, setHasSearched] = useState(false);
   const [locationError, setLocationError] = useState('');
 
@@ -253,11 +258,17 @@ export function LandingPage() {
       : [...current, sport]);
   };
 
+  // ── Search: update map AND navigate to /arenas with query ──
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const searchTerm = `${selectedSports.join(' ')} sports facilities in ${location.trim()}`;
+    const searchTerm = `${selectedSports.join(' ')} sports ${location.trim()} Lahore`;
     setMapSearchTerm(searchTerm);
     setHasSearched(true);
+    // Build query string for /arenas so the real venue list also filters
+    const q = new URLSearchParams();
+    if (location.trim()) q.set('q', location.trim());
+    if (selectedSports.length) q.set('sport', selectedSports[0]);
+    router.push(`/arenas?${q.toString()}`);
   };
 
   const handleUseLocation = () => {
@@ -290,15 +301,24 @@ export function LandingPage() {
           {/* Center links */}
           <div className="mkt-nav-links">
             <a href="#discover" className="mkt-nav-link">Find a place</a>
+            <Link href="/arenas" className="mkt-nav-link">Lahore Venues</Link>
             <a href="#features" className="mkt-nav-link">Features</a>
             <a href="#sports"   className="mkt-nav-link">Sports</a>
             <a href="#how"      className="mkt-nav-link">How it works</a>
-            <a href="#stats"    className="mkt-nav-link">Platform</a>
           </div>
 
         
           <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-            <Link href="/login" className="btn btn-primary btn-sm">Sign in</Link>
+            {user ? (
+              <>
+                <span style={{ fontSize: 13, color: 'var(--color-text-secondary)', fontWeight: 600 }}>
+                  Hi, {user.name.split(' ')[0]}
+                </span>
+                <button onClick={logout} className="btn btn-secondary btn-sm">Sign out</button>
+              </>
+            ) : (
+              <Link href="/login" className="btn btn-primary btn-sm">Sign in</Link>
+            )}
           </div>
         </div>
       </nav>
@@ -349,7 +369,7 @@ export function LandingPage() {
                 <input
                   id="finder-location"
                   type="text"
-                  placeholder="City, neighborhood, or postcode"
+                  placeholder="Area, e.g. DHA, Gulberg, Johar Town…"
                   value={location}
                   onChange={event => setLocation(event.target.value)}
                   onFocus={() => setLocationError('')}
@@ -365,7 +385,7 @@ export function LandingPage() {
                 type="submit"
                 disabled={!selectedSports.length || !location.trim()}
               >
-                Search on map {Icons.arrow}
+                Find venues in Lahore {Icons.arrow}
               </button>
             </form>
 
@@ -588,6 +608,7 @@ export function LandingPage() {
               <a href="#features">Features</a>
               <a href="#sports">Sports</a>
               <a href="#how">How it works</a>
+              <Link href="/arenas">Lahore Venue Finder</Link>
             </div>
 
             <div className="mkt-footer-col">

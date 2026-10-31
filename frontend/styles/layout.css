@@ -422,3 +422,213 @@
 [data-theme="dark"] .feature-card  { background: var(--color-surface); border-color: var(--color-border); }
 [data-theme="dark"] .feature-icon  { filter: brightness(.85) saturate(.9); }
 [data-theme="dark"] .badge-neutral { background: var(--color-surface-raised); color: var(--color-text-secondary); }
+
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   LOGIN PAGE — QUICK CARDS + LOADING OVERLAY
+══════════════════════════════════════════════════════════════════════════════ */
+
+/* Quick access cards */
+.login-quick-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 13px 14px;
+  background: var(--color-surface-raised);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+  font-family: var(--font-sans);
+}
+.login-quick-card:hover {
+  box-shadow: var(--shadow-sm);
+  border-color: var(--color-primary);
+}
+.login-quick-card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.login-quick-icon {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.login-quick-label {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .01em;
+}
+.login-quick-desc {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+  margin: 0;
+}
+.login-quick-email {
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+  opacity: .75;
+}
+.login-quick-fill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-top: 2px;
+}
+
+/* Submit button */
+.login-submit-btn {
+  width: 100%;
+  padding: 13px 20px;
+  font-size: 15px;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+/* ── Full-screen loading overlay ── */
+.login-loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: linear-gradient(135deg, #0d1f2d 0%, #0f5b78 60%, #1686a4 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: loginFadeIn .25s ease;
+}
+@keyframes loginFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.login-loading-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+/* Spinning rings logo */
+.login-loading-logo {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.login-loading-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2.5px solid transparent;
+  border-top-color: rgba(255,255,255,.8);
+  border-right-color: rgba(255,255,255,.3);
+  animation: loginSpin 1s linear infinite;
+}
+.login-loading-ring-2 {
+  inset: 10px;
+  border-top-color: #fbbf24;
+  border-right-color: rgba(251,191,36,.25);
+  animation-duration: 1.5s;
+  animation-direction: reverse;
+}
+@keyframes loginSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* Bouncing dots */
+.login-loading-dots {
+  display: flex;
+  gap: 7px;
+}
+.login-loading-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.7);
+  animation: loginBounce 1.2s ease-in-out infinite;
+}
+.login-loading-dots span:nth-child(2) { animation-delay: .15s; }
+.login-loading-dots span:nth-child(3) { animation-delay: .3s; }
+@keyframes loginBounce {
+  0%, 80%, 100% { transform: scale(.7); opacity: .4; }
+  40%            { transform: scale(1);   opacity: 1;   }
+}
+
+/* Text */
+.login-loading-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -.02em;
+  margin: 0;
+}
+.login-loading-sub {
+  font-size: 13.5px;
+  color: rgba(255,255,255,.6);
+  margin: -14px 0 0;
+}
+
+/* Animated progress bar */
+.login-loading-bar {
+  width: 220px;
+  height: 3px;
+  background: rgba(255,255,255,.15);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.login-loading-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #fbbf24, #fff, #fbbf24);
+  background-size: 200% 100%;
+  border-radius: 99px;
+  animation: loginProgress 1.8s ease-in-out infinite;
+}
+@keyframes loginProgress {
+  0%   { width: 0%;   background-position: 0% 0%; }
+  50%  { width: 70%;  background-position: 100% 0%; }
+  100% { width: 100%; background-position: 200% 0%; }
+}
+
+
+/* ── Auth tab switcher ── */
+.auth-tabs {
+  display: flex;
+  background: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+.auth-tab {
+  flex: 1;
+  padding: 9px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), box-shadow var(--transition);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-family: var(--font-sans);
+}
+.auth-tab:hover { color: var(--color-text); }
+.auth-tab-active {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+  font-weight: 700;
+}

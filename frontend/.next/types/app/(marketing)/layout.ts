@@ -1,4 +1,4 @@
-// File: C:\Users\PMLS\Documents\GitHub\playdex-official\frontend\app\(marketing)\layout.tsx
+// File: /home/wahad-ahmed/Documents/GitHub/playdex-official/frontend/app/(marketing)/layout.tsx
 import * as entry from '../../../../app/(marketing)/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
