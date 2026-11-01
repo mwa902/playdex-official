@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState, type FormEvent } from 'react';
 import { useTheme } from '@/context/ThemeContext';
 import { useAuth } from '@/context/AuthContext';
+import { PlaydexGlobe } from '@/components/marketing/PlaydexGlobe';
 
 /* ─── Sport tile SVG icons ──────────────────────────────────────────────── */
 const SportIcons = {
@@ -104,18 +105,18 @@ const SportIcons = {
 };
 
 const SPORTS = [
-  { name: 'Football',     sub: 'Leagues & cups',      color: '#0f5b78', icon: SportIcons.football    },
-  { name: 'Cricket',      sub: 'Matches & series',    color: '#16a34a', icon: SportIcons.cricket     },
-  { name: 'Tennis',       sub: 'Tournaments',         color: '#d97706', icon: SportIcons.tennis      },
-  { name: 'Basketball',   sub: 'Seasons & playoffs',  color: '#dc2626', icon: SportIcons.basketball  },
-  { name: 'Badminton',    sub: 'Singles & doubles',   color: '#7c3aed', icon: SportIcons.badminton   },
-  { name: 'Swimming',     sub: 'Galas & relays',      color: '#0369a1', icon: SportIcons.swimming    },
-  { name: 'Athletics',    sub: 'Track & field',       color: '#b45309', icon: SportIcons.athletics   },
-  { name: 'Volleyball',   sub: 'Indoor & beach',      color: '#0891b2', icon: SportIcons.volleyball  },
-  { name: 'Hockey',       sub: 'Field & ice',         color: '#065f46', icon: SportIcons.hockey      },
-  { name: 'Table Tennis', sub: 'Open & ranked',       color: '#4f46e5', icon: SportIcons.table_tennis},
-  { name: 'Boxing',       sub: 'Bouts & circuits',    color: '#9f1239', icon: SportIcons.boxing      },
-  { name: 'Cycling',      sub: 'Road & velodrome',    color: '#92400e', icon: SportIcons.cycling     },
+  { name: 'Football',     sub: 'Leagues & cups',      color: '#22B8D0', icon: SportIcons.football    },
+  { name: 'Cricket',      sub: 'Matches & series',    color: '#FFD447', icon: SportIcons.cricket     },
+  { name: 'Tennis',       sub: 'Tournaments',         color: '#8FA9B8', icon: SportIcons.tennis      },
+  { name: 'Basketball',   sub: 'Seasons & playoffs',  color: '#22B8D0', icon: SportIcons.basketball  },
+  { name: 'Badminton',    sub: 'Singles & doubles',   color: '#FFD447', icon: SportIcons.badminton   },
+  { name: 'Swimming',     sub: 'Galas & relays',      color: '#8FA9B8', icon: SportIcons.swimming    },
+  { name: 'Athletics',    sub: 'Track & field',       color: '#22B8D0', icon: SportIcons.athletics   },
+  { name: 'Volleyball',   sub: 'Indoor & beach',      color: '#FFD447', icon: SportIcons.volleyball  },
+  { name: 'Hockey',       sub: 'Field & ice',         color: '#8FA9B8', icon: SportIcons.hockey      },
+  { name: 'Table Tennis', sub: 'Open & ranked',       color: '#22B8D0', icon: SportIcons.table_tennis},
+  { name: 'Boxing',       sub: 'Bouts & circuits',    color: '#FFD447', icon: SportIcons.boxing      },
+  { name: 'Cycling',      sub: 'Road & velodrome',    color: '#8FA9B8', icon: SportIcons.cycling     },
 ];
 
 const SPORT_BENEFITS = [
@@ -226,7 +227,7 @@ const FEATURE_ICONS = {
 };
 
 const features = [
-  { iconKey: 'event',     color: '#e8f4f8', darkColor: 'rgba(56,169,201,.12)', stroke: '#0f5b78', title: 'Event Management',     desc: 'Create, schedule, and manage sports events end-to-end. Track capacity, status, and participant flow in real time.' },
+  { iconKey: 'event',     color: '#DDF5F8', darkColor: 'rgba(34,184,208,.12)', stroke: '#22B8D0', title: 'Event Management',     desc: 'Create, schedule, and manage sports events end-to-end. Track capacity, status, and participant flow in real time.' },
   { iconKey: 'venue',     color: '#fff3e0', darkColor: 'rgba(245,158,11,.1)',  stroke: '#d97706', title: 'Venue Operations',       desc: 'Register sports facilities, track court capacity, and assign events to venues with conflict detection.' },
   { iconKey: 'booking',   color: '#e8f5e9', darkColor: 'rgba(74,222,128,.1)',  stroke: '#16a34a', title: 'Booking Pipeline',       desc: 'Process participant registrations, manage seat allocation, and update booking statuses instantly.' },
   { iconKey: 'org',       color: '#f3e5f5', darkColor: 'rgba(167,139,250,.1)', stroke: '#7c3aed', title: 'Organisation Control',   desc: 'Manage multiple sports organisations and clubs with full CRUD access and event ownership.' },
@@ -246,28 +247,26 @@ export function LandingPage() {
   const { user, logout } = useAuth();
   const router = useRouter();
 
-  const [selectedSports, setSelectedSports] = useState<string[]>([]);
+  const [selectedSport, setSelectedSport] = useState('');
   const [location, setLocation] = useState('');
   const [mapSearchTerm, setMapSearchTerm] = useState('sports venues Lahore');
   const [hasSearched, setHasSearched] = useState(false);
   const [locationError, setLocationError] = useState('');
 
   const toggleSport = (sport: string) => {
-    setSelectedSports(current => current.includes(sport)
-      ? current.filter(item => item !== sport)
-      : [...current, sport]);
+    setSelectedSport(current => current === sport ? '' : sport);
   };
 
   // ── Search: update map AND navigate to /arenas with query ──
   const handleSearch = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const searchTerm = `${selectedSports.join(' ')} sports ${location.trim()} Lahore`;
+    const searchTerm = `${selectedSport} sports ${location.trim()} Lahore`;
     setMapSearchTerm(searchTerm);
     setHasSearched(true);
     // Build query string for /arenas so the real venue list also filters
     const q = new URLSearchParams();
     if (location.trim()) q.set('q', location.trim());
-    if (selectedSports.length) q.set('sport', selectedSports[0]);
+    if (selectedSport) q.set('sport', selectedSport);
     router.push(`/arenas?${q.toString()}`);
   };
 
@@ -305,6 +304,8 @@ export function LandingPage() {
             <a href="#features" className="mkt-nav-link">Features</a>
             <a href="#sports"   className="mkt-nav-link">Sports</a>
             <a href="#how"      className="mkt-nav-link">How it works</a>
+            <a href="#pricing"  className="mkt-nav-link">Pricing</a>
+            <a href="#about"    className="mkt-nav-link">About</a>
           </div>
 
         
@@ -326,10 +327,15 @@ export function LandingPage() {
   
       <section id="discover" className="finder-hero">
         <div className="mkt-section">
-          <div className="finder-heading">
-            <div className="hero-eyebrow">Playdex · Find your game</div>
-            <h1>Find your place<br /><span>to play.</span></h1>
-            <p>Choose your sport, enter an area, and explore what is nearby.</p>
+          <div className="finder-hero-intro">
+            <div className="finder-heading">
+              <div className="hero-eyebrow">Playdex · Find your game</div>
+              <h1>Find your place<br /><span>to play.</span></h1>
+              <p>Choose your sport, enter an area, and explore what is nearby.</p>
+            </div>
+            <div className="finder-globe-frame">
+              <PlaydexGlobe />
+            </div>
           </div>
 
           <div className="finder-workspace">
@@ -340,16 +346,16 @@ export function LandingPage() {
                   <h2>Choose a sport</h2>
                 </div>
                 <span className="finder-selection-count">
-                  {selectedSports.length ? `${selectedSports.length} selected` : 'Select any'}
+                  {selectedSport ? '1 selected' : 'Select a sport'}
                 </span>
               </div>
               <div className="finder-sports" aria-label="Choose sports">
                 {SPORTS.map(sport => (
                   <button
                     key={sport.name}
-                    className={`finder-sport${selectedSports.includes(sport.name) ? ' is-selected' : ''}`}
+                    className={`finder-sport${selectedSport === sport.name ? ' is-selected' : ''}`}
                     type="button"
-                    aria-pressed={selectedSports.includes(sport.name)}
+                    aria-pressed={selectedSport === sport.name}
                     onClick={() => toggleSport(sport.name)}
                   >
                     <span style={{ color: sport.color }}>{sport.icon}</span>
@@ -383,7 +389,7 @@ export function LandingPage() {
               <button
                 className="finder-search-button"
                 type="submit"
-                disabled={!selectedSports.length || !location.trim()}
+                disabled={!selectedSport || !location.trim()}
               >
                 Find venues in Lahore {Icons.arrow}
               </button>
@@ -492,21 +498,9 @@ export function LandingPage() {
           </div>
 
           {/* Benefits strip */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 24,
-          }}>
+          <div className="sport-benefits-grid">
             {SPORT_BENEFITS.map(b => (
-              <div key={b.title} style={{
-                padding: '24px 28px',
-                background: 'var(--color-surface)',
-                border: '1px solid var(--color-border)',
-                borderRadius: 'var(--radius-xl)',
-                display: 'flex',
-                gap: 16,
-                alignItems: 'flex-start',
-              }}>
+              <div key={b.title} className="sport-benefit-card">
                 <div style={{
                   width: 42, height: 42,
                   borderRadius: 10,
@@ -536,7 +530,7 @@ export function LandingPage() {
         <div className="mkt-section">
           <span className="section-label">Process</span>
           <h2 className="section-heading">Operational from day one</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 32, marginTop: 52 }}>
+          <div className="process-steps-grid">
             {[
               {
                 step: '01',
@@ -576,6 +570,51 @@ export function LandingPage() {
         </div>
       </section>
 
+      <section id="about" className="about-section">
+        <div className="mkt-section">
+          <div className="about-layout">
+            <div className="about-copy">
+              <span className="section-label">About us</span>
+              <h2>Built to bring people closer to the game.</h2>
+              <p>Playdex is a sports booking and operations platform created by Wahad Ahmed to make finding a place to play feel effortless.</p>
+            </div>
+            <div className="about-contact">
+              <p className="about-contact-label">Connect with</p>
+              <h3>Wahad Ahmed</h3>
+              <a href="tel:03320241610">03320241610</a>
+              <a href="https://www.linkedin.com/in/wahad-ahmed-916696294/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
+              <a href="https://www.instagram.com/wwahaaaad_/" target="_blank" rel="noreferrer">Instagram <span>↗</span></a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" className="pricing-section">
+        <div className="mkt-section">
+          <div className="pricing-heading">
+            <span className="section-label">Pricing</span>
+            <h2>Free to play. Built to grow.</h2>
+            <p>Clear options for players and sports businesses.</p>
+          </div>
+          <div className="pricing-options">
+            <article className="pricing-option">
+              <span className="pricing-audience">FOR PLAYERS</span>
+              <h3>End users</h3>
+              <p className="pricing-value">Free</p>
+              <p>Create an account, discover venues, and manage your bookings with no Playdex subscription.</p>
+              <small>Venue or session charges are shown before you book.</small>
+            </article>
+            <article className="pricing-option pricing-option-business">
+              <span className="pricing-audience">FOR SPORTS BUSINESSES</span>
+              <h3>Company registration</h3>
+              <p className="pricing-value">Custom</p>
+              <p>Plans are tailored to your organization, venues, and operating needs.</p>
+              <a href="#about" className="pricing-contact-link">Ask about company pricing <span>↗</span></a>
+            </article>
+          </div>
+        </div>
+      </section>
+
       {/* ── CTA ── */}
       <section className="cta-section">
         <div className="mkt-section">
@@ -595,7 +634,7 @@ export function LandingPage() {
           <div className="mkt-footer-grid">
             <div className="mkt-footer-brand">
               <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontWeight: 700, fontSize: 18, color: '#fff' }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2.5" strokeLinecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FFD447" strokeWidth="2.5" strokeLinecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                 Playdex
               </div>
               <p>
@@ -620,9 +659,9 @@ export function LandingPage() {
 
             <div className="mkt-footer-col">
               <h4>Contact</h4>
-              <a href="mailto:hello@playdex.io">hello@playdex.io</a>
-              <a href="tel:+15550198">+1 (555) 0198</a>
-              <span>Live ops support</span>
+              <a href="tel:03320241610">03320241610</a>
+              <a href="https://www.linkedin.com/in/wahad-ahmed-916696294/" target="_blank" rel="noreferrer">LinkedIn</a>
+              <a href="https://www.instagram.com/wwahaaaad_/" target="_blank" rel="noreferrer">Instagram</a>
             </div>
           </div>
 
