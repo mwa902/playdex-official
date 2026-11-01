@@ -49,30 +49,6 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/venues": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/venues",
-      "dataRoute": "/venues.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
     "/organizations": {
       "experimentalBypassFor": [
         {
@@ -88,6 +64,30 @@
       "initialRevalidateSeconds": false,
       "srcRoute": "/organizations",
       "dataRoute": "/organizations.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/venues": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/venues",
+      "dataRoute": "/venues.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -121,6 +121,30 @@
         "x-next-revalidate-tag-token"
       ]
     },
+    "/arenas": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/arenas",
+      "dataRoute": "/arenas.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
     "/admin/arenas": {
       "experimentalBypassFor": [
         {
@@ -145,7 +169,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/arenas": {
+    "/admin/settings": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -158,8 +182,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/arenas",
-      "dataRoute": "/arenas.rsc",
+      "srcRoute": "/admin/settings",
+      "dataRoute": "/admin/settings.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -242,7 +266,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/admin/settings": {
+    "/dashboard": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -255,56 +279,8 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/admin/settings",
-      "dataRoute": "/admin/settings.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/event-types": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/event-types",
-      "dataRoute": "/event-types.rsc",
-      "allowHeader": [
-        "host",
-        "x-matched-path",
-        "x-prerender-revalidate",
-        "x-prerender-revalidate-if-generated",
-        "x-next-revalidated-tags",
-        "x-next-revalidate-tag-token"
-      ]
-    },
-    "/login": {
-      "experimentalBypassFor": [
-        {
-          "type": "header",
-          "key": "next-action"
-        },
-        {
-          "type": "header",
-          "key": "content-type",
-          "value": "multipart/form-data;.*"
-        }
-      ],
-      "initialRevalidateSeconds": false,
-      "srcRoute": "/login",
-      "dataRoute": "/login.rsc",
+      "srcRoute": "/dashboard",
+      "dataRoute": "/dashboard.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",
@@ -338,7 +314,7 @@
         "x-next-revalidate-tag-token"
       ]
     },
-    "/dashboard": {
+    "/login": {
       "experimentalBypassFor": [
         {
           "type": "header",
@@ -351,8 +327,32 @@
         }
       ],
       "initialRevalidateSeconds": false,
-      "srcRoute": "/dashboard",
-      "dataRoute": "/dashboard.rsc",
+      "srcRoute": "/login",
+      "dataRoute": "/login.rsc",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/event-types": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "next-action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/event-types",
+      "dataRoute": "/event-types.rsc",
       "allowHeader": [
         "host",
         "x-matched-path",

@@ -25,7 +25,11 @@ export class UserService implements OnModuleInit {
       );
       if (parseInt(rows[0].count, 10) === 0) {
         const email    = process.env.SUPERADMIN_EMAIL    || 'superadmin@playdex.io';
-        const password = process.env.SUPERADMIN_PASSWORD || 'SuperAdmin@2024';
+        const configuredPassword = process.env.SUPERADMIN_PASSWORD;
+        if (process.env.NODE_ENV === 'production' && !configuredPassword) {
+          throw new Error('SUPERADMIN_PASSWORD must be configured in production.');
+        }
+        const password = configuredPassword || 'SuperAdmin@2024';
         const name     = process.env.SUPERADMIN_NAME     || 'Super Admin';
         const hash     = await bcrypt.hash(password, 10);
 
@@ -39,6 +43,7 @@ export class UserService implements OnModuleInit {
       }
     } catch (err) {
       this.logger.error('Superadmin seeding failed', err);
+      if (process.env.NODE_ENV === 'production') throw err;
     }
   }
 

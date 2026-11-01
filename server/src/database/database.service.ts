@@ -39,8 +39,10 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
     try {
       client = await this.pool.connect();
       this.logger.log('PostgreSQL connected successfully.');
-      const migrator = new Migration(this.pool);
-      await migrator.runMigrations();
+      if (!process.env.VERCEL && process.env.RUN_MIGRATIONS !== 'false') {
+        const migrator = new Migration(this.pool);
+        await migrator.runMigrations();
+      }
     } catch (err) {
       this.logger.error('Database initialisation failed', err);
       throw err;

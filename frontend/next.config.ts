@@ -16,7 +16,7 @@ const nextConfig: NextConfig = {
   // ── API proxy rewrites ──────────────────────────────────────────────────
   // All /api/* calls from the browser are rewritten to the backend.
   // Locally  → http://localhost:5000
-  // On Vercel → NEXT_PUBLIC_API_BASE_URL (set in Vercel env vars)
+  // On Vercel → BACKEND_INTERNAL_URL (set in Vercel env vars)
   //
   // This means the browser always calls the *same* origin (no CORS needed
   // for deployed frontend), and the backend URL never leaks to the client.
@@ -28,7 +28,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: `${backendUrl}/:path*`,
+        destination: `${backendUrl}/api/:path*`,
       },
     ];
   },
