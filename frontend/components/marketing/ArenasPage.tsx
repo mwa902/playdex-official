@@ -15,6 +15,13 @@ const SPORT_OPTIONS = [
   'Basketball', 'Volleyball', 'Table Tennis', 'Snooker', 'Karting', 'Multi-Sport',
 ];
 
+function categoryForSport(sport: string): SportTypeFilter {
+  if (sport === 'All Sports') return 'All';
+  if (sport === 'Swimming') return 'Pool';
+  if (sport === 'Gym Session' || sport === 'CrossFit') return 'Gym';
+  return 'Arena';
+}
+
 // ─── Sport type tab config ───────────────────────────────────────────────────
 const TABS: { label: string; value: SportTypeFilter; emoji: string; desc: string }[] = [
   { label: 'All',    value: 'All',   emoji: '🏟️', desc: 'All venues' },
@@ -26,7 +33,7 @@ const TABS: { label: string; value: SportTypeFilter; emoji: string; desc: string
 // ─── Venue card ──────────────────────────────────────────────────────────────
 function VenueCard({ v }: { v: VenueRecord }) {
   const typeColor: Record<string, { bg: string; text: string }> = {
-    Arena: { bg: '#e8f4f8', text: '#0f5b78' },
+    Arena: { bg: '#DDF5F8', text: '#102D3A' },
     Gym:   { bg: '#fef3c7', text: '#92400e' },
     Pool:  { bg: '#e0f2fe', text: '#0369a1' },
   };
@@ -160,9 +167,12 @@ export function ArenasPage() {
     const q = search.trim().toLowerCase();
     const matchSearch = !q || v.name.toLowerCase().includes(q)
       || v.address.toLowerCase().includes(q)
+      || (v.city ?? '').toLowerCase().includes(q)
       || (v.description ?? '').toLowerCase().includes(q);
     const matchTab  = tab === 'All' || v.sport_type === tab;
-    return matchSearch && matchTab;
+    const venueCategory = categoryForSport(sport);
+    const matchSport = venueCategory === 'All' || v.sport_type === venueCategory;
+    return matchSearch && matchTab && matchSport;
   });
 
   const counts = {

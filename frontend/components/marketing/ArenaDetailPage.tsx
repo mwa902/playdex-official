@@ -63,6 +63,7 @@ interface ESlipProps {
 }
 export function ESlip({ booking, event, venue, paymentMethod, screenshotUrl, onClose }: ESlipProps) {
   const slipRef = useRef<HTMLDivElement>(null);
+  const [printComplete, setPrintComplete] = useState(false);
   const sport   = extractSport(event.name, venue.sport_type);
   const total   = event.price != null
     ? `PKR ${(event.price * booking.seats).toLocaleString()}`
@@ -72,18 +73,19 @@ export function ESlip({ booking, event, venue, paymentMethod, screenshotUrl, onC
     if (!slipRef.current) return;
     const win = window.open('', '_blank', 'width=700,height=1100');
     if (!win) return;
+    win.addEventListener('afterprint', () => setPrintComplete(true), { once: true });
     win.document.write(`<!DOCTYPE html><html><head>
       <title>Booking Slip — ${booking.id.slice(0, 8).toUpperCase()}</title>
       <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         body { font-family:'Segoe UI',system-ui,sans-serif; background:#f4f6f8; padding:32px; color:#17212b; }
         .slip { max-width:600px; margin:0 auto; background:#fff; border-radius:14px; box-shadow:0 6px 32px rgba(0,0,0,.12); overflow:hidden; }
-        .slip-header { background:linear-gradient(120deg,#0d1f2d,#0f5b78); color:#fff; padding:28px 32px; }
+        .slip-header { background:linear-gradient(120deg,#0B1620,#102D3A); color:#F4F8FB; padding:28px 32px; }
         .slip-header h1 { font-size:22px; font-weight:800; letter-spacing:-.02em; margin-bottom:4px; }
         .slip-header p  { font-size:13px; opacity:.7; }
         .slip-ref-bar   { background:#f8fafc; border-bottom:1px solid #dde3e8; padding:14px 32px; display:flex; align-items:center; justify-content:space-between; }
         .slip-ref-label { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#8094a2; }
-        .slip-ref-value { font-size:22px; font-weight:900; color:#0f5b78; letter-spacing:.06em; }
+        .slip-ref-value { font-size:22px; font-weight:900; color:#102D3A; letter-spacing:.06em; }
         .slip-body      { padding:24px 32px; }
         .slip-section   { font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:#8094a2; margin:18px 0 12px; }
         .slip-grid      { display:grid; grid-template-columns:1fr 1fr; gap:14px 28px; }
@@ -92,7 +94,7 @@ export function ESlip({ booking, event, venue, paymentMethod, screenshotUrl, onC
         .slip-divider   { height:1px; background:#dde3e8; margin:18px 0; }
         .slip-price-box { background:#e8f4f8; border:1px solid #b8dce9; border-radius:10px; padding:14px 20px; display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
         .slip-price-lbl { font-size:13px; color:#4e5f6d; font-weight:600; }
-        .slip-price-val { font-size:26px; font-weight:900; color:#0f5b78; }
+        .slip-price-val { font-size:26px; font-weight:900; color:#102D3A; }
         .slip-pay       { background:#fef3c7; border:1px solid #fcd34d; border-radius:10px; padding:14px 20px; }
         .slip-pay-title { font-size:12px; font-weight:800; color:#92400e; margin-bottom:8px; }
         .slip-pay-row   { display:flex; justify-content:space-between; font-size:12px; color:#78350f; padding:4px 0; border-bottom:1px solid rgba(252,211,77,.4); }
@@ -212,6 +214,11 @@ export function ESlip({ booking, event, venue, paymentMethod, screenshotUrl, onC
           <span>Reference: {booking.id.slice(0, 8).toUpperCase()}</span>
         </div>
       </div>
+      {printComplete && (
+        <div className="alert alert-info e-slip-email-notice" role="status">
+          Your final e-slip is ready. We’ll send a confirmation email to {booking.customer_email} once email delivery is configured.
+        </div>
+      )}
     </Modal>
   );
 }

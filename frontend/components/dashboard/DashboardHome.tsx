@@ -39,7 +39,7 @@ export function DashboardHome() {
     <div className="page-grid">
       {/* Welcome banner */}
       <div style={{
-        background: 'linear-gradient(120deg, #0d1f2d 0%, #0f5b78 55%, #1686a4 100%)',
+        background: 'linear-gradient(120deg, #0B1620 0%, #102D3A 64%, #22B8D0 135%)',
         borderRadius: 'var(--radius-xl)',
         padding: '28px 32px',
         color: '#fff',
@@ -48,7 +48,7 @@ export function DashboardHome() {
       }}>
         <div style={{
           position: 'absolute', inset: 0, opacity: .12,
-          background: 'radial-gradient(circle at 80% 50%, #fbbf24 0%, transparent 60%)',
+          background: 'linear-gradient(110deg, transparent 45%, rgba(255,212,71,.14) 100%)',
           pointerEvents: 'none',
         }} />
         <div style={{ position: 'relative' }}>

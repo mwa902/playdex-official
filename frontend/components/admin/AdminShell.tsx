@@ -68,7 +68,7 @@ export function AdminShell({ children }: AdminShellProps) {
   ];
 
   const typeColor: Record<string, { bg: string; text: string }> = {
-    Arena: { bg: '#e8f4f8', text: '#0f5b78' },
+    Arena: { bg: '#DDF5F8', text: '#102D3A' },
     Gym:   { bg: '#fef3c7', text: '#92400e' },
     Pool:  { bg: '#e0f2fe', text: '#0369a1' },
   };

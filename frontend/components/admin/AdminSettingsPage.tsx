@@ -125,7 +125,7 @@ export function AdminSettingsPage() {
             <div style={{ display: 'flex', alignItems: 'center', gap: 16, marginBottom: 24 }}>
               <div style={{
                 width: 64, height: 64, borderRadius: '50%',
-                background: 'linear-gradient(135deg, #0f5b78, #1686a4)',
+                background: 'linear-gradient(135deg, #0B1620, #102D3A 70%, #22B8D0)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 fontSize: 22, fontWeight: 800, color: '#fff', flexShrink: 0,
               }}>
