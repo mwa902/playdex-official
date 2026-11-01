@@ -1,6 +1,4 @@
 CREATE TABLE IF NOT EXISTS events
-
-CREATE TABLE events
 (
     id              UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
     organization_id UUID             NOT NULL,

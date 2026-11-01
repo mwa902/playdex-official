@@ -13,13 +13,17 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
   private pool: Pool;
 
   constructor() {
-    const connectionString =
-      process.env.DATABASE_URL ||
+    const configuredConnectionString = process.env.DATABASE_URL;
+    if (!configuredConnectionString && process.env.NODE_ENV === 'production') {
+      throw new Error('DATABASE_URL must be configured for production PostgreSQL.');
+    }
+
+    const connectionString = configuredConnectionString ||
       `postgresql://${process.env.POSTGRES_USER || 'postgres'}:${process.env.POSTGRES_PASSWORD || 'postgres'}@localhost:5432/${process.env.POSTGRES_DB || 'localdev'}`;
 
     this.pool = new Pool({
       connectionString,
-      max: 10,
+      max: 5,
       idleTimeoutMillis: 30000,
       connectionTimeoutMillis: 5000,
     });
@@ -39,7 +43,7 @@ export class DatabaseService implements OnModuleInit, OnModuleDestroy {
       await migrator.runMigrations();
     } catch (err) {
       this.logger.error('Database initialisation failed', err);
-      // Don't crash the app — let it start and handle query errors per-request
+      throw err;
     } finally {
       client?.release();
     }
