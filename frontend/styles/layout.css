@@ -307,7 +307,7 @@
   grid-template-columns: 1fr 1fr;
 }
 .auth-left {
-  background: linear-gradient(145deg, #0d1f2d 0%, #0f5b78 60%, #1686a4 100%);
+  background: linear-gradient(145deg, #0B1620 0%, #102D3A 62%, #22B8D0 120%);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -498,7 +498,7 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: linear-gradient(135deg, #0d1f2d 0%, #0f5b78 60%, #1686a4 100%);
+  background: linear-gradient(135deg, #0B1620 0%, #102D3A 62%, #22B8D0 120%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -538,8 +538,8 @@
 }
 .login-loading-ring-2 {
   inset: 10px;
-  border-top-color: #fbbf24;
-  border-right-color: rgba(251,191,36,.25);
+  border-top-color: #FFD447;
+  border-right-color: rgba(255,212,71,.25);
   animation-duration: 1.5s;
   animation-direction: reverse;
 }
@@ -590,7 +590,7 @@
 }
 .login-loading-progress {
   height: 100%;
-  background: linear-gradient(90deg, #fbbf24, #fff, #fbbf24);
+  background: linear-gradient(90deg, #FFD447, #F4F8FB, #FFD447);
   background-size: 200% 100%;
   border-radius: 99px;
   animation: loginProgress 1.8s ease-in-out infinite;
