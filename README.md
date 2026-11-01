@@ -149,6 +149,16 @@ Migrations run automatically on server startup. Files are in `server/src/databas
 | `10_venue_schema_fix.sql` | Removes duplicate address constraint |
 | `11_event_price.sql` | Adds price column to events |
 
+## Production Database
+
+The API requires a persistent PostgreSQL database in production. A free-tier Neon PostgreSQL database works with the existing `pg` driver. Create a Neon project, copy its pooled or direct connection string, then set it as `DATABASE_URL` in the API host's environment. Keep the value private; do not put it in `NEXT_PUBLIC_*` variables or commit it to the repository.
+
+For deployment, set `DATABASE_URL` on the API service and `BACKEND_INTERNAL_URL` on the Vercel project to the public base URL of that API. Vercel proxies `/api/*` to this address. The stale Railway URL previously checked into `vercel.json` has been removed. Production builds now fail if the backend URL is not configured.
+
+On startup, the API applies pending migrations. Migration `09_seed_lahore_venues.sql` seeds the 135 Lahore venues, and later migrations seed event types and add booking payment fields. The smaller connection pool is configured for hosted database limits. Deploys reuse the same database as long as `DATABASE_URL` stays pointed at that database; do not reset or replace the database to deploy code changes.
+
+If `DATABASE_URL` is missing or a migration fails, the production API now fails startup instead of appearing healthy with unusable data endpoints. Verify deployment by checking `GET /` and `GET /venues` on the API. Free database tiers have storage, compute, and inactivity limits; API hosting may also have separate costs.
+
 ---
 
 ## Project Structure
