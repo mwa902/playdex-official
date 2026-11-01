@@ -1,5 +1,10 @@
 import type { NextConfig } from 'next';
 
+const backendUrl =
+  process.env.BACKEND_INTERNAL_URL ??
+  process.env.NEXT_PUBLIC_API_BASE_URL ??
+  (process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:5000');
+
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   eslint: { ignoreDuringBuilds: true },
@@ -16,10 +21,9 @@ const nextConfig: NextConfig = {
   // This means the browser always calls the *same* origin (no CORS needed
   // for deployed frontend), and the backend URL never leaks to the client.
   async rewrites() {
-    const backendUrl =
-      process.env.BACKEND_INTERNAL_URL ??
-      process.env.NEXT_PUBLIC_API_BASE_URL ??
-      'http://localhost:5000';
+    if (!backendUrl) {
+      throw new Error('Set BACKEND_INTERNAL_URL for production deployments.');
+    }
 
     return [
       {

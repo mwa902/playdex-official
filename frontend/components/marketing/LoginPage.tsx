@@ -148,7 +148,7 @@ const DEMO_ACCOUNTS = [
     email: 'superadmin@playdex.io',
     password: 'SuperAdmin@2024',
     desc: 'Full platform access',
-    color: '#0f5b78', bg: '#e8f4f8',
+    color: '#102D3A', bg: '#DDF5F8',
     icon: <ShieldIcon />,
   },
   {
@@ -280,12 +280,12 @@ export function LoginPage() {
         <div className="auth-left">
           <div style={{ position: 'relative', zIndex: 1, width: '100%', maxWidth: 460 }}>
             <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 48, textDecoration: 'none' }}>
-              <span style={{ color: '#fbbf24' }}><LogoIcon /></span>
+              <span style={{ color: '#FFD447' }}><LogoIcon /></span>
               <span style={{ color: '#fff', fontSize: 19, fontWeight: 800, letterSpacing: '-.02em' }}>Playdex</span>
             </Link>
 
             <h1 style={{ color: '#fff', fontSize: 'clamp(1.8rem,3vw,2.7rem)', fontWeight: 900, lineHeight: 1.08, letterSpacing: '-.03em', marginBottom: 16 }}>
-              Lahore sports,<br/><span style={{ color: '#fbbf24' }}>book online.</span>
+              Lahore sports,<br/><span style={{ color: '#FFD447' }}>book online.</span>
             </h1>
             <p style={{ color: 'rgba(255,255,255,.65)', fontSize: 14.5, lineHeight: 1.75, maxWidth: '36ch', marginBottom: 44 }}>
               Create a free account to browse and book slots at 135 arenas, gyms and pools across Lahore. Pay via SadaPay, NayaPay, Easypaisa or Raast.
