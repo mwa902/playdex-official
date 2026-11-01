@@ -18,7 +18,7 @@ import { EventTypeModule } from './event_type/event_type.module';
     DatabaseModule,
     OrganizationModule,
     VenueModule,
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env.local', '.env'] }),
     EventModule,
     BookingModule,
     EventTypeModule
