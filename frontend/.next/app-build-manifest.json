@@ -16,6 +16,21 @@
       "static/chunks/main-app.js",
       "static/chunks/app/(marketing)/layout.js"
     ],
+    "/(marketing)/arenas/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(marketing)/arenas/page.js"
+    ],
+    "/(auth)/layout": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(auth)/layout.js"
+    ],
+    "/(auth)/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/(auth)/login/page.js"
+    ],
     "/(marketing)/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
