@@ -32,7 +32,7 @@ VALUES
   (org_id, 'Padel Cafe', 'Padel and badminton', 'Link Bedian Road, near PKLI Hospital, DHA Phase 6, Lahore', 'Lahore', 60, 'Arena', '0302 2949999', 'https://maps.google.com/maps?q=Padel+Cafe+DHA+Phase+6+Lahore'),
   (org_id, 'Space Padel Lahore', 'Padel courts', 'DHA Lahore', 'Lahore', 40, 'Arena', '0331 0432342', 'https://maps.google.com/maps?q=Space+Padel+Lahore'),
   (org_id, 'Pure Padel', 'Padel courts', 'Street 17, KK Block, DHA Phase 4, Lahore', 'Lahore', 40, 'Arena', '0311 7777873', 'https://maps.google.com/maps?q=Pure+Padel+DHA+Phase+4+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
 VALUES
@@ -46,7 +46,7 @@ VALUES
   (org_id, 'Punjab University Sports Complex', 'Multi-sport complex', 'Quaid-e-Azam Campus, University of the Punjab, Lahore', 'Lahore', 500, 'Arena', '0327 8829422', 'https://maps.google.com/maps?q=Punjab+University+Sports+Complex+Lahore'),
   (org_id, '5th Generation Sports Complex', 'Multi-sport complex', 'Sector Y, DHA Phase 8, Lahore', 'Lahore', 300, 'Arena', '0333 0001333', 'https://maps.google.com/maps?q=5th+Generation+Sports+Complex+DHA+Phase+8+Lahore'),
   (org_id, 'Tennis & Badminton Stadium', 'Tennis and badminton', 'E-2 Block, Gulberg III, Lahore', 'Lahore', 200, 'Arena', '0300 0258096', 'https://maps.google.com/maps?q=Tennis+Badminton+Stadium+Gulberg+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
 VALUES
@@ -60,7 +60,7 @@ VALUES
   (org_id, 'Pluto Arena', 'Futsal and cricket', '20 Abdul Sattar Edhi Road, Rahimabad, Lahore', 'Lahore', 100, 'Arena', '0306 4659219', 'https://maps.google.com/maps?q=Pluto+Arena+Rahimabad+Lahore'),
   (org_id, 'Maidaan Sports Arena', 'Cricket and badminton', '252 Block L, Johar Town, Lahore', 'Lahore', 120, 'Arena', '0325 1181822', 'https://maps.google.com/maps?q=Maidaan+Sports+Arena+Johar+Town+Lahore'),
   (org_id, 'Lord''s Futsal and Cricket Field', 'Futsal and cricket', 'Plot 535, Sector XX, DHA Phase 3, Lahore', 'Lahore', 100, 'Arena', '0326 6289004', 'https://maps.google.com/maps?q=Lords+Futsal+Cricket+DHA+Phase+3+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
 VALUES
@@ -74,7 +74,7 @@ VALUES
   (org_id, 'Sportzilla Sports Arena', 'Karting and multi-sport', 'Shabbir Sagheer Road, Bedian Road, Lahore', 'Lahore', 200, 'Arena', '0325 8999981', 'https://maps.google.com/maps?q=Sportzilla+Sports+Arena+Bedian+Road+Lahore'),
   (org_id, 'Play On Model Town', 'Indoor cricket', 'F8FJ+9FF, R Block, Model Town, Lahore', 'Lahore', 80, 'Arena', '0302 8804976', 'https://maps.google.com/maps?q=Play+On+Model+Town+Lahore'),
   (org_id, 'Askari Sports Arena', 'Multi-sport', 'Askari 11, Sector D, Lahore', 'Lahore', 150, 'Arena', '0301 8840334', 'https://maps.google.com/maps?q=Askari+Sports+Arena+Askari+11+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
 VALUES
@@ -88,7 +88,7 @@ VALUES
   (org_id, 'Indoor Cricket Sports Club', 'Indoor cricket and multi-sport', 'FCQC+6C4, Rohi Nala Road, Khuda Buksh Colony, Lahore', 'Lahore', 80, 'Arena', '0302 1414536', 'https://maps.google.com/maps?q=Indoor+Cricket+Sports+Club+Lahore'),
   (org_id, 'Sports Galaxy Indoor Cricket', 'Indoor cricket and multi-sport', 'M Block, opposite DHA Phase 5, Natha Singh Wala, Lahore', 'Lahore', 80, 'Arena', '0323 4522042', 'https://maps.google.com/maps?q=Sports+Galaxy+Indoor+Cricket+Lahore'),
   (org_id, 'CricBox Rooftop Cricket', 'Indoor cricket and multi-sport', 'NADRA Mega Center, PECO Road, Sector B1, Lahore', 'Lahore', 80, 'Arena', '0300 7722543', 'https://maps.google.com/maps?q=CricBox+Rooftop+Cricket+PECO+Road+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
 VALUES
@@ -102,7 +102,7 @@ VALUES
   (org_id, 'Elite Indoor & Cricket Academy', 'Indoor cricket and multi-sport', 'Dera Chahal, Lahore', 'Lahore', 80, 'Arena', '0301 0010121', 'https://maps.google.com/maps?q=Elite+Indoor+Cricket+Academy+Dera+Chahal+Lahore'),
   (org_id, 'Straight Drive Indoor Sports', 'Indoor cricket and multi-sport', 'Ring Road Service Lane, near Quaid-e-Azam Road, Harbanspura, Lahore', 'Lahore', 80, 'Arena', '0321 8806039', 'https://maps.google.com/maps?q=Straight+Drive+Indoor+Sports+Harbanspura+Lahore'),
   (org_id, 'Fusion Arena', 'Indoor cricket and multi-sport', 'M Block, Natha Singh Wala, Lahore', 'Lahore', 80, 'Arena', '0328 5876146', 'https://maps.google.com/maps?q=Fusion+Arena+Natha+Singh+Wala+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
 VALUES
@@ -116,7 +116,7 @@ VALUES
   (org_id, 'York Indoor', 'Indoor cricket', 'E-6 Street, Rah-e-Danish School, Nadirabad, Bedian Road, Lahore', 'Lahore', 80, 'Arena', '0300 7863290', 'https://maps.google.com/maps?q=York+Indoor+Bedian+Road+Lahore'),
   (org_id, 'PAK Indoor Cricket Arena', 'Indoor cricket', 'Lodhi Palace, Bund Road, Karim Park, Lahore', 'Lahore', 80, 'Arena', '0309 9068491', 'https://maps.google.com/maps?q=PAK+Indoor+Cricket+Arena+Bund+Road+Lahore'),
   (org_id, 'FR DHA Phase 5', 'Cricket and futsal', 'M Block, DHA Phase 5, Lahore', 'Lahore', 120, 'Arena', '0331 3333011', 'https://maps.google.com/maps?q=FR+DHA+Phase+5+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
 VALUES
@@ -130,13 +130,13 @@ VALUES
   (org_id, 'Al-Raffay Rooftop Arena', 'Indoor cricket', 'Al-Faisal Town, Lahore', 'Lahore', 80, 'Arena', NULL, 'https://maps.google.com/maps?q=Al+Raffay+Rooftop+Arena+Al+Faisal+Town+Lahore'),
   (org_id, 'Aqua Cricket Arena', 'Indoor cricket', 'Wildlife Park Road, Kot Bagh, Lahore', 'Lahore', 80, 'Arena', NULL, 'https://maps.google.com/maps?q=Aqua+Cricket+Arena+Kot+Bagh+Lahore'),
   (org_id, 'Box Sports', 'Indoor cricket', 'Harbanspura, Lahore', 'Lahore', 80, 'Arena', NULL, 'https://maps.google.com/maps?q=Box+Sports+Harbanspura+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
 VALUES
   (org_id, 'Can Games Indoor Arena', 'Indoor cricket', 'Ichhra, Lahore', 'Lahore', 80, 'Arena', NULL, 'https://maps.google.com/maps?q=Can+Games+Indoor+Arena+Ichhra+Lahore'),
   (org_id, 'Champions Sports Arena', 'Indoor sports', 'Mustafa Town, Lahore', 'Lahore', 100, 'Arena', NULL, 'https://maps.google.com/maps?q=Champions+Sports+Arena+Mustafa+Town+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 -- ════════════════════════════════════════════════════════════════════════════
 -- GYMS & FITNESS CENTRES (35 venues)
@@ -153,7 +153,7 @@ VALUES
   (org_id, 'Xtreme Fitness DHA Phase 8', 'Gym and fitness centre', 'Block M, Air Avenue, DHA Phase 8, Lahore', 'Lahore', 100, 'Gym', '0336 4255323', 'https://maps.google.com/maps?q=Xtreme+Fitness+DHA+Phase+8+Lahore'),
   (org_id, 'Sukh Chan Wellness Club', 'Gym and fitness centre', '25-H College Road, Gulberg II, Lahore', 'Lahore', 150, 'Gym', '0330 8602222', 'https://maps.google.com/maps?q=Sukh+Chan+Wellness+Club+Gulberg+Lahore'),
   (org_id, 'Max Fit Gym', 'Gym and fitness centre', 'CCA 1, Plaza 11, Sector C, DHA Phase 6, Lahore', 'Lahore', 80, 'Gym', '0300 7861723', 'https://maps.google.com/maps?q=Max+Fit+Gym+DHA+Phase+6+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
 VALUES
@@ -167,7 +167,7 @@ VALUES
   (org_id, 'Bazil Fitness Club', 'Gym and fitness centre', 'Plot 47-A, Jasmine Commercial, Park View City, Lahore', 'Lahore', 60, 'Gym', '0334 9511084', 'https://maps.google.com/maps?q=Bazil+Fitness+Club+Park+View+City+Lahore'),
   (org_id, 'Be Legend Fitness Club', 'Gym and fitness centre', '8-C Main, Faisal Town, Lahore', 'Lahore', 60, 'Gym', '0316 4609209', 'https://maps.google.com/maps?q=Be+Legend+Fitness+Club+Faisal+Town+Lahore'),
   (org_id, 'Beats Fitness', 'Gym and fitness centre', '24 Ali Block, Garden Town, Lahore', 'Lahore', 60, 'Gym', '0320 4027607', 'https://maps.google.com/maps?q=Beats+Fitness+Garden+Town+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
 VALUES
@@ -181,7 +181,7 @@ VALUES
   (org_id, 'Qutab Fitness Club', 'Gym and fitness centre', 'Hassan Center, 1st Floor, Main Boulevard, Bahria Town, Lahore', 'Lahore', 80, 'Gym', '0322 0423279', 'https://maps.google.com/maps?q=Qutab+Fitness+Club+Bahria+Town+Lahore'),
   (org_id, 'Reshape Ladies Fitness Club', 'Ladies gym and fitness centre', 'Rehmat Market, 2nd Floor, Usmania Tower, WAPDA Town, Lahore', 'Lahore', 60, 'Gym', '0315 8046177', 'https://maps.google.com/maps?q=Reshape+Ladies+Fitness+Club+WAPDA+Town+Lahore'),
   (org_id, 'Sculpture Fitness', 'Gym and fitness centre', 'Defence Road opposite DHA Rahbar Gate 4, Lahore', 'Lahore', 80, 'Gym', '0300 4371516', 'https://maps.google.com/maps?q=Sculpture+Fitness+Defence+Road+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
 VALUES
@@ -190,7 +190,7 @@ VALUES
   (org_id, 'Velocity Health & Fitness', 'Gym and fitness centre', '5th Floor, Amanah Mall, Model Town Link Road, Lahore', 'Lahore', 100, 'Gym', '0322 4966664', 'https://maps.google.com/maps?q=Velocity+Health+Fitness+Amanah+Mall+Lahore'),
   (org_id, 'VCL Gym', 'Gym and fitness centre', '24-M Civic Centre, International Market, Model Town, Lahore', 'Lahore', 80, 'Gym', '0344 7760000', 'https://maps.google.com/maps?q=VCL+Gym+Model+Town+Lahore'),
   (org_id, 'Workout Zone Fitness Center', 'Gym and fitness centre', 'Street 8, Block B3, PGECHS, Lahore', 'Lahore', 80, 'Gym', '0309 9536709', 'https://maps.google.com/maps?q=Workout+Zone+Fitness+Center+PGECHS+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 -- ════════════════════════════════════════════════════════════════════════════
 -- SWIMMING POOLS (18 venues)
@@ -207,7 +207,7 @@ VALUES
   (org_id, 'Shapes Community Club Swimming Pool', 'Swimming pool', 'Al Rehman Garden Phase 2, Lahore', 'Lahore', 150, 'Pool', '0300 0222904', 'https://maps.google.com/maps?q=Shapes+Community+Club+Swimming+Pool+Lahore'),
   (org_id, 'Gold Spa and Fitness Club Pool', 'Swimming pool and spa', '3rd Floor, Mall of Lahore, Aziz Bhatti Road, Cantt, Lahore', 'Lahore', 150, 'Pool', '042 111111980', 'https://maps.google.com/maps?q=Gold+Spa+Fitness+Club+Mall+of+Lahore'),
   (org_id, 'Samanabad Sports Arena Swimming Pool', 'Swimming pool', 'Ghazali Road, Samanabad Town, Lahore', 'Lahore', 200, 'Pool', '042 37550000', 'https://maps.google.com/maps?q=Samanabad+Sports+Arena+Swimming+Pool+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 INSERT INTO venue (organization_id, name, description, address, city, capacity, sport_type, phone, google_maps_url)
 VALUES
@@ -219,6 +219,6 @@ VALUES
   (org_id, 'Structure Health & Fitness Gulberg Pool', 'Swimming pool', '39-A Zafar Ali Road, Gulberg V, Lahore', 'Lahore', 100, 'Pool', '0322 2295555', 'https://maps.google.com/maps?q=Structure+Health+Fitness+Gulberg+Pool+Lahore'),
   (org_id, 'LDA Sports Complex Minar-e-Pakistan Pool', 'Swimming pool', 'Ravi Park, Main Road, near Minar-e-Pakistan, Lahore', 'Lahore', 200, 'Pool', '0322 8888527', 'https://maps.google.com/maps?q=LDA+Sports+Complex+Minar+e+Pakistan+Pool+Lahore'),
   (org_id, 'Defence Club Phase 1 Pool', 'Swimming pool', 'Defence Club, Sector J, DHA Phase 1, Lahore', 'Lahore', 200, 'Pool', NULL, 'https://maps.google.com/maps?q=Defence+Club+Phase+1+Pool+Lahore')
-ON CONFLICT (name) DO NOTHING;
+ON CONFLICT DO NOTHING;
 
 END $$;
