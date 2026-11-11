@@ -5,11 +5,14 @@ Date range: 30 Oct 2026 → 30 Nov 2026 (32 days)
 Price: PKR 2500 each
 """
 
+import os
 import subprocess
 from datetime import date, timedelta
 
 # ─── Config ───────────────────────────────────────────────────────────────────
-DB = "postgresql://wahad:1234@localhost:5432/sports_management_database"
+DB = os.environ.get("DATABASE_URL")
+if not DB:
+    raise RuntimeError("Set DATABASE_URL before running this script.")
 ORG_ID = "00000000-0000-0000-0000-000000000001"
 PRICE  = 2500
 
