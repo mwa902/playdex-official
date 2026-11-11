@@ -207,31 +207,11 @@ async function req<T>(path: string, options: RequestInit = {}): Promise<T> {
 // ─── API surface ─────────────────────────────────────────────────────────────
 export const api = {
   // Auth — calls POST /users/login on the server
-  // Falls back to local demo accounts when server is unreachable (offline demo mode)
   loginUser: async (email: string, password: string): Promise<User> => {
-    const DEMO_USERS: User[] = [
-      { id: 'demo-superadmin-1', name: 'Super Admin',    email: 'superadmin@playdex.io', role: 'superadmin', is_active: 'Active' },
-      { id: 'demo-admin-1',      name: 'Platform Admin', email: 'admin@playdex.io',       role: 'admin',      is_active: 'Active' },
-    ];
-    const DEMO_PASSWORDS: Record<string, string> = {
-      'superadmin@playdex.io': 'SuperAdmin@2024',
-      'admin@playdex.io':      'Admin@2024',
-    };
-
-    try {
-      return await req<User>('/users/login', {
-        method: 'POST',
-        body: JSON.stringify({ email, password }),
-      });
-    } catch (err) {
-      // Backend unreachable → fall back to local demo credentials
-      if (err instanceof ApiError && err.status === 0) {
-        const demo = DEMO_USERS.find(u => u.email === email);
-        if (demo && DEMO_PASSWORDS[email] === password) return demo;
-        throw new ApiError(401, 'Unauthorized', { message: 'Invalid email or password.' });
-      }
-      throw err;
-    }
+    return req<User>('/users/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    });
   },
 
   // Users
