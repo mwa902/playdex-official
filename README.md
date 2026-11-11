@@ -18,19 +18,9 @@ Admins manage venues and create booking slots through a dedicated admin panel.
 
 ---
 
-## Login Credentials
+## Admin Account Setup
 
-### Admin Panel — `/admin/login`
-
-| Name | Email | Password | Role |
-|------|-------|----------|------|
-| Super Admin | `superadmin@playdex.io` | `SuperAdmin@2024` | superadmin |
-| Platform Admin | `admin@playdex.io` | `Admin@2024` | admin |
-| Wahad Ahmed | `wahad@playdex.io` | `Wahad@2024` | admin |
-
-### User Login — `/login`
-
-Same accounts above work here too. Regular users can also register via sign-up.
+Set a unique `SUPERADMIN_PASSWORD` in the server environment before first startup. The server seeds the initial superadmin only when the users table is empty. Do not commit the password or publish demo credentials. Regular users can register through `/login`.
 
 ---
 
@@ -63,6 +53,9 @@ PORT=5000
 DATABASE_URL=postgresql://YOUR_USER:YOUR_PASSWORD@localhost:5432/YOUR_DB
 FRONTEND_URL=http://localhost:3000
 AUTH_TOKEN=Bearer-my-secret-token
+SUPERADMIN_EMAIL=admin@example.com
+SUPERADMIN_PASSWORD=replace-with-a-unique-password
+SUPERADMIN_NAME=Super Admin
 ```
 
 **Frontend** — create `frontend/.env.local`:
@@ -201,21 +194,11 @@ playdex-official/
 
 ### Frontend — Vercel
 
-1. Push to GitHub
-2. Import repo in Vercel
-3. Set root directory to `frontend`
-4. Add env var: `NEXT_PUBLIC_API_BASE_URL=https://your-backend.railway.app`
+Follow [the frontend Vercel deployment guide](frontend/VERCEL_DEPLOYMENT.md). Set the project root to `frontend` and configure `BACKEND_INTERNAL_URL` with the deployed API's HTTPS origin.
 
-### Backend — Railway
+### Backend — Render
 
-1. Connect GitHub repo in Railway
-2. Set root directory to `server`
-3. Add env vars:
-   ```
-   DATABASE_URL=postgresql://...
-   FRONTEND_URL=https://your-app.vercel.app
-   PORT=5000
-   ```
+Use the repository's `render.yaml` Blueprint, which sets the service root to `server` and runs only the NestJS build. Set `DATABASE_URL`, `SUPERADMIN_PASSWORD`, and `FRONTEND_URL` in Render's environment settings. Keep secrets in the host's environment panel, never in the repository.
 
 ---
 
