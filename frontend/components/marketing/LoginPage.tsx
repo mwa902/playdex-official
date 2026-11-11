@@ -62,11 +62,6 @@ const LogoIcon = () => (
     <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
   </svg>
 );
-const UserIcon = () => (
-  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
-  </svg>
-);
 const LockIcon = () => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
     <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
@@ -88,17 +83,6 @@ const EyeOffIcon = () => (
     <line x1="1" y1="1" x2="23" y2="23"/>
   </svg>
 );
-const ShieldIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-  </svg>
-);
-const ArrowIcon = () => (
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-    <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
-  </svg>
-);
-
 // ─── Password input with eye toggle ──────────────────────────────────────────
 function PasswordField({
   id, label, value, onChange, placeholder, autoComplete, disabled,
@@ -140,26 +124,6 @@ function PasswordField({
     </div>
   );
 }
-
-// ─── Demo quick-fill cards ────────────────────────────────────────────────────
-const DEMO_ACCOUNTS = [
-  {
-    label: 'Superadmin',
-    email: 'superadmin@playdex.io',
-    password: 'SuperAdmin@2024',
-    desc: 'Full platform access',
-    color: '#102D3A', bg: '#DDF5F8',
-    icon: <ShieldIcon />,
-  },
-  {
-    label: 'Wahad Ahmed',
-    email: 'wahad@playdex.io',
-    password: 'Wahad@2024',
-    desc: 'Admin — arenas & slots',
-    color: '#16a34a', bg: '#dcfce7',
-    icon: <UserIcon />,
-  },
-];
 
 // ─── Main page ────────────────────────────────────────────────────────────────
 type Tab = 'login' | 'signup';
@@ -262,14 +226,6 @@ export function LoginPage() {
 
   const switchTab = (t: Tab) => { setTab(t); setError(null); setSignupDone(false); };
 
-  const fillDemo = (acc: typeof DEMO_ACCOUNTS[0]) => {
-    setLEmail(acc.email);
-    setLPassword(acc.password);
-    setLoadingName(acc.label);
-    setError(null);
-    setTab('login');
-  };
-
   return (
     <>
       {loading && <LoadingOverlay name={loadingName} isSignup={tab === 'signup'} />}
@@ -365,33 +321,6 @@ export function LoginPage() {
             {/* ══════════════ LOGIN TAB ══════════════ */}
             {tab === 'login' && (
               <>
-                {/* Quick-access cards */}
-                <p style={{ fontSize: 11, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '.1em', color: 'var(--color-text-muted)', marginBottom: 10 }}>
-                  Quick access
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10, marginBottom: 20 }}>
-                  {DEMO_ACCOUNTS.map(acc => (
-                    <button
-                      key={acc.email}
-                      type="button"
-                      onClick={() => fillDemo(acc)}
-                      className="login-quick-card"
-                      style={{
-                        borderColor: lEmail === acc.email ? acc.color : undefined,
-                        background:  lEmail === acc.email ? acc.bg   : undefined,
-                      }}
-                    >
-                      <div className="login-quick-card-top">
-                        <span className="login-quick-icon" style={{ background: acc.bg, color: acc.color }}>{acc.icon}</span>
-                        <span className="login-quick-label" style={{ color: acc.color }}>{acc.label}</span>
-                      </div>
-                      <p className="login-quick-desc">{acc.desc}</p>
-                      <div className="login-quick-email">{acc.email}</div>
-                      <div className="login-quick-fill">Fill credentials <ArrowIcon /></div>
-                    </button>
-                  ))}
-                </div>
-
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
                   <div style={{ flex: 1, height: 1, background: 'var(--color-border)' }} />
                   <span style={{ fontSize: 11.5, color: 'var(--color-text-muted)', fontWeight: 500 }}>or enter manually</span>
