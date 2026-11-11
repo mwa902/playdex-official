@@ -26,12 +26,15 @@ export class UserService implements OnModuleInit {
       if (parseInt(rows[0].count, 10) === 0) {
         const email    = process.env.SUPERADMIN_EMAIL    || 'superadmin@playdex.io';
         const configuredPassword = process.env.SUPERADMIN_PASSWORD;
-        if (process.env.NODE_ENV === 'production' && !configuredPassword) {
-          throw new Error('SUPERADMIN_PASSWORD must be configured in production.');
+        if (!configuredPassword) {
+          if (process.env.NODE_ENV === 'production') {
+            throw new Error('SUPERADMIN_PASSWORD must be configured in production.');
+          }
+          this.logger.warn('SUPERADMIN_PASSWORD is unset; skipping superadmin seed.');
+          return;
         }
-        const password = configuredPassword || 'SuperAdmin@2024';
         const name     = process.env.SUPERADMIN_NAME     || 'Super Admin';
-        const hash     = await bcrypt.hash(password, 10);
+        const hash     = await bcrypt.hash(configuredPassword, 10);
 
         await this.db.query(
           `INSERT INTO users (name, email, password, role, is_active)
