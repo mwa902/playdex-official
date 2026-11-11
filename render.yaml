@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: playdex-api
+    runtime: node
+    plan: free
+    rootDir: server
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: SUPERADMIN_PASSWORD
+        sync: false
+      - key: SUPERADMIN_EMAIL
+        value: superadmin@playdex.io
+      - key: SUPERADMIN_NAME
+        value: Super Admin
+      - key: FRONTEND_URL
+        sync: false
