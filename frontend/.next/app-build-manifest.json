@@ -40,50 +40,6 @@
       "static/chunks/619-f09bc47e24909021.js",
       "static/chunks/app/(dashboard)/dashboard/page-38079382a6d75f51.js"
     ],
-    "/(dashboard)/organizations/page": [
-      "static/chunks/webpack-48cf56a32f6ede44.js",
-      "static/chunks/4bd1b696-c023c6e3521b1417.js",
-      "static/chunks/255-97acbf4932b5884e.js",
-      "static/chunks/main-app-c9752f07edb9fecd.js",
-      "static/chunks/app/(dashboard)/organizations/page-a97871299871f1ba.js"
-    ],
-    "/(dashboard)/events/page": [
-      "static/chunks/webpack-48cf56a32f6ede44.js",
-      "static/chunks/4bd1b696-c023c6e3521b1417.js",
-      "static/chunks/255-97acbf4932b5884e.js",
-      "static/chunks/main-app-c9752f07edb9fecd.js",
-      "static/chunks/619-f09bc47e24909021.js",
-      "static/chunks/app/(dashboard)/events/page-84fce3357237722e.js"
-    ],
-    "/(dashboard)/users/page": [
-      "static/chunks/webpack-48cf56a32f6ede44.js",
-      "static/chunks/4bd1b696-c023c6e3521b1417.js",
-      "static/chunks/255-97acbf4932b5884e.js",
-      "static/chunks/main-app-c9752f07edb9fecd.js",
-      "static/chunks/app/(dashboard)/users/page-91ea618d20bdc90b.js"
-    ],
-    "/(dashboard)/venues/page": [
-      "static/chunks/webpack-48cf56a32f6ede44.js",
-      "static/chunks/4bd1b696-c023c6e3521b1417.js",
-      "static/chunks/255-97acbf4932b5884e.js",
-      "static/chunks/main-app-c9752f07edb9fecd.js",
-      "static/chunks/app/(dashboard)/venues/page-f333e8d3e2d2687b.js"
-    ],
-    "/(dashboard)/bookings/page": [
-      "static/chunks/webpack-48cf56a32f6ede44.js",
-      "static/chunks/4bd1b696-c023c6e3521b1417.js",
-      "static/chunks/255-97acbf4932b5884e.js",
-      "static/chunks/main-app-c9752f07edb9fecd.js",
-      "static/chunks/app/(dashboard)/bookings/page-77ded2e458816c48.js"
-    ],
-    "/(dashboard)/events/[id]/page": [
-      "static/chunks/webpack-48cf56a32f6ede44.js",
-      "static/chunks/4bd1b696-c023c6e3521b1417.js",
-      "static/chunks/255-97acbf4932b5884e.js",
-      "static/chunks/main-app-c9752f07edb9fecd.js",
-      "static/chunks/619-f09bc47e24909021.js",
-      "static/chunks/app/(dashboard)/events/[id]/page-43018f1de96dcc39.js"
-    ],
     "/(auth)/layout": [
       "static/chunks/webpack-48cf56a32f6ede44.js",
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
@@ -99,12 +55,86 @@
       "static/chunks/619-f09bc47e24909021.js",
       "static/chunks/app/(auth)/login/page-efae87d4ec4705bf.js"
     ],
+    "/(dashboard)/events/[id]/page": [
+      "static/chunks/webpack-48cf56a32f6ede44.js",
+      "static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "static/chunks/255-97acbf4932b5884e.js",
+      "static/chunks/main-app-c9752f07edb9fecd.js",
+      "static/chunks/619-f09bc47e24909021.js",
+      "static/chunks/app/(dashboard)/events/[id]/page-43018f1de96dcc39.js"
+    ],
+    "/(dashboard)/event-types/page": [
+      "static/chunks/webpack-48cf56a32f6ede44.js",
+      "static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "static/chunks/255-97acbf4932b5884e.js",
+      "static/chunks/main-app-c9752f07edb9fecd.js",
+      "static/chunks/app/(dashboard)/event-types/page-f2bae130e89eef2d.js"
+    ],
+    "/(dashboard)/events/page": [
+      "static/chunks/webpack-48cf56a32f6ede44.js",
+      "static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "static/chunks/255-97acbf4932b5884e.js",
+      "static/chunks/main-app-c9752f07edb9fecd.js",
+      "static/chunks/619-f09bc47e24909021.js",
+      "static/chunks/app/(dashboard)/events/page-84fce3357237722e.js"
+    ],
+    "/(dashboard)/organizations/page": [
+      "static/chunks/webpack-48cf56a32f6ede44.js",
+      "static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "static/chunks/255-97acbf4932b5884e.js",
+      "static/chunks/main-app-c9752f07edb9fecd.js",
+      "static/chunks/app/(dashboard)/organizations/page-a97871299871f1ba.js"
+    ],
+    "/(dashboard)/venues/page": [
+      "static/chunks/webpack-48cf56a32f6ede44.js",
+      "static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "static/chunks/255-97acbf4932b5884e.js",
+      "static/chunks/main-app-c9752f07edb9fecd.js",
+      "static/chunks/app/(dashboard)/venues/page-f333e8d3e2d2687b.js"
+    ],
+    "/(dashboard)/bookings/page": [
+      "static/chunks/webpack-48cf56a32f6ede44.js",
+      "static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "static/chunks/255-97acbf4932b5884e.js",
+      "static/chunks/main-app-c9752f07edb9fecd.js",
+      "static/chunks/app/(dashboard)/bookings/page-77ded2e458816c48.js"
+    ],
     "/(marketing)/layout": [
       "static/chunks/webpack-48cf56a32f6ede44.js",
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
       "static/chunks/255-97acbf4932b5884e.js",
       "static/chunks/main-app-c9752f07edb9fecd.js",
       "static/chunks/app/(marketing)/layout-5cf1e19f1c56f2c6.js"
+    ],
+    "/(marketing)/arenas/[id]/page": [
+      "static/chunks/webpack-48cf56a32f6ede44.js",
+      "static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "static/chunks/255-97acbf4932b5884e.js",
+      "static/chunks/main-app-c9752f07edb9fecd.js",
+      "static/chunks/619-f09bc47e24909021.js",
+      "static/chunks/app/(marketing)/arenas/[id]/page-8b89eb946a4f44f7.js"
+    ],
+    "/admin/layout": [
+      "static/chunks/webpack-48cf56a32f6ede44.js",
+      "static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "static/chunks/255-97acbf4932b5884e.js",
+      "static/chunks/main-app-c9752f07edb9fecd.js",
+      "static/chunks/619-f09bc47e24909021.js",
+      "static/chunks/app/admin/layout-0047cabc0713a715.js"
+    ],
+    "/admin/arenas/page": [
+      "static/chunks/webpack-48cf56a32f6ede44.js",
+      "static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "static/chunks/255-97acbf4932b5884e.js",
+      "static/chunks/main-app-c9752f07edb9fecd.js",
+      "static/chunks/app/admin/arenas/page-c3f186c23f07a33c.js"
+    ],
+    "/(dashboard)/users/page": [
+      "static/chunks/webpack-48cf56a32f6ede44.js",
+      "static/chunks/4bd1b696-c023c6e3521b1417.js",
+      "static/chunks/255-97acbf4932b5884e.js",
+      "static/chunks/main-app-c9752f07edb9fecd.js",
+      "static/chunks/app/(dashboard)/users/page-91ea618d20bdc90b.js"
     ],
     "/(marketing)/page": [
       "static/chunks/webpack-48cf56a32f6ede44.js",
@@ -116,20 +146,13 @@
       "static/chunks/619-f09bc47e24909021.js",
       "static/chunks/app/(marketing)/page-26b07f342cfc2c68.js"
     ],
-    "/(marketing)/arenas/[id]/page": [
+    "/admin/dashboard/page": [
       "static/chunks/webpack-48cf56a32f6ede44.js",
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
       "static/chunks/255-97acbf4932b5884e.js",
       "static/chunks/main-app-c9752f07edb9fecd.js",
       "static/chunks/619-f09bc47e24909021.js",
-      "static/chunks/app/(marketing)/arenas/[id]/page-8b89eb946a4f44f7.js"
-    ],
-    "/(dashboard)/event-types/page": [
-      "static/chunks/webpack-48cf56a32f6ede44.js",
-      "static/chunks/4bd1b696-c023c6e3521b1417.js",
-      "static/chunks/255-97acbf4932b5884e.js",
-      "static/chunks/main-app-c9752f07edb9fecd.js",
-      "static/chunks/app/(dashboard)/event-types/page-f2bae130e89eef2d.js"
+      "static/chunks/app/admin/dashboard/page-6a66d82e9bbdd3b4.js"
     ],
     "/(marketing)/arenas/page": [
       "static/chunks/webpack-48cf56a32f6ede44.js",
@@ -139,35 +162,12 @@
       "static/chunks/619-f09bc47e24909021.js",
       "static/chunks/app/(marketing)/arenas/page-0e5899c3a3592c90.js"
     ],
-    "/admin/layout": [
-      "static/chunks/webpack-48cf56a32f6ede44.js",
-      "static/chunks/4bd1b696-c023c6e3521b1417.js",
-      "static/chunks/255-97acbf4932b5884e.js",
-      "static/chunks/main-app-c9752f07edb9fecd.js",
-      "static/chunks/619-f09bc47e24909021.js",
-      "static/chunks/app/admin/layout-0047cabc0713a715.js"
-    ],
-    "/admin/dashboard/page": [
-      "static/chunks/webpack-48cf56a32f6ede44.js",
-      "static/chunks/4bd1b696-c023c6e3521b1417.js",
-      "static/chunks/255-97acbf4932b5884e.js",
-      "static/chunks/main-app-c9752f07edb9fecd.js",
-      "static/chunks/619-f09bc47e24909021.js",
-      "static/chunks/app/admin/dashboard/page-6a66d82e9bbdd3b4.js"
-    ],
     "/admin/settings/page": [
       "static/chunks/webpack-48cf56a32f6ede44.js",
       "static/chunks/4bd1b696-c023c6e3521b1417.js",
       "static/chunks/255-97acbf4932b5884e.js",
       "static/chunks/main-app-c9752f07edb9fecd.js",
       "static/chunks/app/admin/settings/page-71dca8d1207a5c18.js"
-    ],
-    "/admin/arenas/page": [
-      "static/chunks/webpack-48cf56a32f6ede44.js",
-      "static/chunks/4bd1b696-c023c6e3521b1417.js",
-      "static/chunks/255-97acbf4932b5884e.js",
-      "static/chunks/main-app-c9752f07edb9fecd.js",
-      "static/chunks/app/admin/arenas/page-c3f186c23f07a33c.js"
     ],
     "/admin/bookings/page": [
       "static/chunks/webpack-48cf56a32f6ede44.js",
