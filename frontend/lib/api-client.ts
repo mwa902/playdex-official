@@ -99,9 +99,19 @@ export interface BookingRecord {
   status: 'Pending' | 'Confirm Booking' | 'Cancelled';
   payment_method: string | null;
   payment_slip?: string | null;
+  membership_monthly_fee: number;
+  membership_joining_fee: number;
   booked_at: string;
   created_at: string;
   updated_at: string;
+}
+
+export interface GymMembershipQuote {
+  monthly_fee: number;
+  joining_fee: number;
+  active: boolean;
+  pending: boolean;
+  expires_at: string | null;
 }
 
 export interface OrganizationRecord {
@@ -225,7 +235,9 @@ export const api = {
     req<{ deleted: boolean }>(`/users/${id}`, { method: 'DELETE' }),
 
   // Events
-  listEvents:   () => req<EventRecord[]>('/events'),
+  listEvents:   (venueId?: string) => req<EventRecord[]>(
+    venueId ? `/events/venue/${venueId}/slots` : '/events',
+  ),
   getEvent:     (id: string) => req<EventRecord>(`/events/${id}`),
   createEvent:  (dto: CreateEventDto) =>
     req<EventRecord>('/events', { method: 'POST', body: JSON.stringify(dto) }),
@@ -246,6 +258,8 @@ export const api = {
 
   // Bookings
   listBookings:        () => req<BookingRecord[]>('/bookings'),
+  getMembershipQuote: (email: string, venueId: string) =>
+    req<GymMembershipQuote>(`/bookings/membership-quote?email=${encodeURIComponent(email)}&venue_id=${encodeURIComponent(venueId)}`),
   listBookingsByEvent: (eventId: string) => req<BookingRecord[]>(`/bookings/event/${eventId}`),
   getBooking:          (id: string) => req<BookingRecord>(`/bookings/${id}`),
   createBooking:  (dto: CreateBookingDto) =>
