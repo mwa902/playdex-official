@@ -16,6 +16,12 @@ export class EventController {
   @ApiOperation({ summary: 'List all events' })
   findAll() { return this.service.findAll(); }
 
+  @Get('venue/:venueId/slots')
+  @ApiOperation({ summary: 'List or generate a venue schedule' })
+  findVenueSchedule(@Param('venueId') venueId: string) {
+    return this.service.findVenueSchedule(venueId);
+  }
+
   @Get(':id')
   @ApiOperation({ summary: 'Get event by ID' })
   findOne(@Param('id') id: string) { return this.service.findOne(id); }
