@@ -65,9 +65,8 @@ export function ESlip({ booking, event, venue, paymentMethod, screenshotUrl, onC
   const slipRef = useRef<HTMLDivElement>(null);
   const [printComplete, setPrintComplete] = useState(false);
   const sport   = extractSport(event.name, venue.sport_type);
-  const total   = event.price != null
-    ? `PKR ${(event.price * booking.seats).toLocaleString()}`
-    : 'Free';
+  const slotTotal = (event.price ?? 0) * booking.seats;
+  const total = `PKR ${(slotTotal + booking.membership_monthly_fee + booking.membership_joining_fee).toLocaleString()}`;
 
   const handlePrint = () => {
     if (!slipRef.current) return;
@@ -184,7 +183,9 @@ export function ESlip({ booking, event, venue, paymentMethod, screenshotUrl, onC
             <div className="slip-price-lbl">
               Total Paid<br />
               <span style={{ fontSize: 11, fontWeight: 400 }}>
-                {booking.seats} seat{booking.seats !== 1 ? 's' : ''} × PKR {event.price?.toLocaleString() ?? 0}
+                Slot: {booking.seats} × PKR {event.price?.toLocaleString() ?? 0}
+                {booking.membership_monthly_fee > 0 && <><br />Monthly gym membership: PKR {booking.membership_monthly_fee.toLocaleString()}</>}
+                {booking.membership_joining_fee > 0 && <><br />One-time joining fee: PKR {booking.membership_joining_fee.toLocaleString()}</>}
               </span>
             </div>
             <div className="slip-price-val">{total}</div>
@@ -196,6 +197,8 @@ export function ESlip({ booking, event, venue, paymentMethod, screenshotUrl, onC
             <div className="slip-pay-row"><span>Service</span><span>{paymentMethod}</span></div>
             <div className="slip-pay-row"><span>Account Number</span><span>{PHONE}</span></div>
             <div className="slip-pay-row"><span>Amount</span><span>{total}</span></div>
+            {booking.membership_monthly_fee > 0 && <div className="slip-pay-row"><span>Gym membership (1 month)</span><span>PKR {booking.membership_monthly_fee.toLocaleString()}</span></div>}
+            {booking.membership_joining_fee > 0 && <div className="slip-pay-row"><span>One-time joining fee</span><span>PKR {booking.membership_joining_fee.toLocaleString()}</span></div>}
             <div className="slip-pay-row"><span>Reference</span><span>{booking.id.slice(0, 8).toUpperCase()}</span></div>
           </div>
 
@@ -252,10 +255,21 @@ function SlotBookingModal({ open, onClose, event, venue, onBooked }: SlotBooking
   const [screenshot,      setScreenshot]     = useState<string | null>(null);
   const [confirmedBooking, setConfirmedBooking] = useState<BookingRecord | null>(null);
 
+  const membership = useData(() => {
+    const email = form.customer_email?.trim();
+    if (venue.sport_type !== 'Gym' || !email || !email.includes('@')) {
+      return Promise.resolve(null);
+    }
+    return api.getMembershipQuote(email, venue.id);
+  }, [form.customer_email, venue.id, venue.sport_type]);
+
   const set = (k: keyof CreateBookingDto, v: unknown) => setForm(f => ({ ...f, [k]: v }));
-  const total = event.price != null
-    ? `PKR ${(event.price * (form.seats ?? 1)).toLocaleString()}`
-    : 'Free';
+  const slotTotal = (event.price ?? 0) * (form.seats ?? 1);
+  const membershipTotal = venue.sport_type === 'Gym'
+    ? (membership.data?.monthly_fee ?? 0) + (membership.data?.joining_fee ?? 0)
+    : 0;
+  const amountDue = slotTotal + membershipTotal;
+  const total = amountDue > 0 ? `PKR ${amountDue.toLocaleString()}` : 'No payment due';
 
   const submitForm = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -263,9 +277,20 @@ function SlotBookingModal({ open, onClose, event, venue, onBooked }: SlotBooking
       setErr('Name, email, and phone are all required.'); return;
     }
     if (!form.seats || form.seats < 1) { setErr('Seats must be at least 1.'); return; }
+    if (venue.sport_type === 'Gym' && (!membership.data || membership.data.pending)) {
+      setErr(membership.data?.pending
+        ? 'Complete your pending gym membership payment before booking another slot.'
+        : 'Enter a valid email and wait for the membership price to load.');
+      return;
+    }
     setSaving(true); setErr(null);
     try {
       const booking = await api.createBooking(form as CreateBookingDto);
+      if (amountDue === 0) {
+        const confirmed = await api.updateBooking(booking.id, { status: 'Confirm Booking' });
+        onBooked(confirmed, 'No payment required', null);
+        return;
+      }
       setConfirmedBooking(booking);
       setStep('payment');
     } catch (ex) {
@@ -308,7 +333,8 @@ function SlotBookingModal({ open, onClose, event, venue, onBooked }: SlotBooking
         footer={
           <>
             <button className="btn btn-secondary" onClick={onClose} disabled={saving}>Cancel</button>
-            <button form="slot-booking-form" type="submit" className="btn btn-primary" disabled={saving}>
+            <button form="slot-booking-form" type="submit" className="btn btn-primary"
+              disabled={saving || (venue.sport_type === 'Gym' && (!membership.data || membership.data.pending))}>
               {saving ? <><span className="spinner" /> Confirming…</> : `Reserve — ${total}`}
             </button>
           </>
@@ -348,11 +374,31 @@ function SlotBookingModal({ open, onClose, event, venue, onBooked }: SlotBooking
                   onChange={e => set('customer_phone', e.target.value)} placeholder="03xx xxxxxxx" required />
               </div>
             </div>
-            <div className="form-field">
-              <label>Seats</label>
-              <input type="number" className="form-input" min={1} max={event.capacity}
-                value={form.seats ?? 1} onChange={e => set('seats', Number(e.target.value))} />
-            </div>
+            {venue.sport_type !== 'Gym' && (
+              <div className="form-field">
+                <label>Seats</label>
+                <input type="number" className="form-input" min={1} max={event.capacity}
+                  value={form.seats ?? 1} onChange={e => set('seats', Number(e.target.value))} />
+              </div>
+            )}
+            {venue.sport_type === 'Gym' && (
+              <div className="slot-modal-total">
+                {membership.state === 'loading' && <span>Checking membership price…</span>}
+                {membership.state === 'error' && <span>Could not load membership price: {membership.error}</span>}
+                {membership.data && (
+                  <div>
+                    {membership.data.pending
+                      ? 'A gym membership payment is already pending for this email.'
+                      : membership.data.active
+                        ? `Membership active until ${membership.data.expires_at ? fmtDate(membership.data.expires_at) : 'expiry date unavailable'}`
+                        : `Monthly membership: PKR ${membership.data.monthly_fee.toLocaleString()}`}
+                    {membership.data.joining_fee > 0 && (
+                      <div>One-time joining fee: PKR {membership.data.joining_fee.toLocaleString()}</div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
             {event.price != null && (
               <div className="slot-modal-total">
                 <span>Total to pay</span>
@@ -566,7 +612,7 @@ function SlotCard({ event, onBook }: { event: EventRecord; onBook: (e: EventReco
 export function ArenaDetailPage({ id }: { id: string }) {
   const { user } = useAuth();
   const venue  = useData(() => api.getVenue(id), [id]);
-  const events = useData(() => api.listEvents(), [id]);
+  const events = useData(() => api.listEvents(id), [id]);
 
   const [selectedEvent, setSelectedEvent] = useState<EventRecord | null>(null);
   const [showLoginGate, setLoginGate]     = useState(false);
@@ -579,8 +625,13 @@ export function ArenaDetailPage({ id }: { id: string }) {
   } | null>(null);
 
   const venueEvents = events.data?.filter(e => e.venue_id === id) ?? [];
-  const available   = venueEvents.filter(e => e.status === 'Available');
-  const unavailable = venueEvents.filter(e => e.status !== 'Available');
+  const now = Date.now();
+  const available = venueEvents.filter(
+    e => e.status === 'Available' && new Date(e.started_at).getTime() > now,
+  );
+  const unavailable = venueEvents.filter(
+    e => e.status !== 'Available' || new Date(e.started_at).getTime() <= now,
+  );
 
   const handleBookClick = useCallback((e: EventRecord) => {
     if (!user) { setLoginGate(true); return; }
@@ -697,7 +748,11 @@ export function ArenaDetailPage({ id }: { id: string }) {
               <div className="arena-slots-heading">
                 <h2>Available slots</h2>
                 <span className="badge badge-success">{available.length} open</span>
-                <span className="badge badge-info">PKR 2,500 each</span>
+                <span className="badge badge-info">
+                  {v.sport_type === 'Gym'
+                    ? 'Monthly membership PKR 500–2,500 + PKR 1,000 joining'
+                    : 'PKR 2,500 per hour'}
+                </span>
               </div>
 
               {events.state === 'loading' && (
