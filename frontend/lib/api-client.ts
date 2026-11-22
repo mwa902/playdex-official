@@ -186,8 +186,8 @@ async function req<T>(path: string, options: RequestInit = {}): Promise<T> {
   try {
     res = await fetch(`${BASE}${path}`, {
       ...options,
-      // Always omit credentials — we don't use cookies for auth, only localStorage
-      credentials: 'omit',
+      // Send Vercel protection cookies to same-origin /api, but not cross-origin APIs.
+      credentials: 'same-origin',
       headers: { 'Content-Type': 'application/json', ...(options.headers ?? {}) },
     });
   } catch (err) {
