@@ -1,6 +1,6 @@
 import {
-  Body, Controller, Delete, Get, HttpCode, HttpStatus,
-  Param, Post, Put,
+  BadRequestException, Body, Controller, Delete, Get, HttpCode, HttpStatus,
+  Param, Post, Put, Query,
 } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { BookingService } from './booking.service';
@@ -19,6 +19,15 @@ export class BookingController {
   @Get('event/:eventId')
   @ApiOperation({ summary: 'List bookings for a specific event' })
   findByEvent(@Param('eventId') eventId: string) { return this.service.findByEvent(eventId); }
+
+  @Get('membership-quote')
+  @ApiOperation({ summary: 'Get monthly gym membership due for a customer' })
+  membershipQuote(@Query('email') email: string, @Query('venue_id') venueId: string) {
+    if (!email || !venueId) {
+      throw new BadRequestException('email and venue_id are required');
+    }
+    return this.service.getMembershipQuote(email, venueId);
+  }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get booking by ID' })
